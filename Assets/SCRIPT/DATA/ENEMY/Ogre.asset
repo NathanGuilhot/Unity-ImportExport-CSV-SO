@@ -12,3 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 748e61ab8fe203f41928b090be98cd25, type: 3}
   m_Name: Ogre
   m_EditorClassIdentifier: 
+  <isValid>k__BackingField: 1
+  _keys:
+  - id
+  - name_en
+  - name_fr
+  - loot

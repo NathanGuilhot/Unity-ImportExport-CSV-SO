@@ -6,6 +6,10 @@ using UnityEngine;
 //The init method patch the lack of constructor and argument in SO.CreateInstance()
 public interface IDataObject
 {
-    public void init(Dictionary<string, string> pData);
+    public void init(Dictionary<string, string> pData, string[] pHeader);
     public bool isValid { get; set; }
+
+    //public string GetHeader();
+    public Dictionary<string, string> GetData();
+    public string[] GetHeader();
 }

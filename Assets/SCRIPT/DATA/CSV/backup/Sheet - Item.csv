@@ -1,0 +1,5 @@
+id,name_en,name_fr,description_en,description_fr,cost,canEquip,damage,prefab_name
+0,Foo,Fou,Bar,Bare,200,FALSE,,foo
+1,Sword,Épée,Careful not to cut yourself!,Attention à pas te couper !,400,TRUE,20,sword
+2,,,,,,,,
+3,,,,,,,,
