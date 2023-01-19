@@ -13,8 +13,11 @@ public class CSVParserTest
         string[] sampledata = {"Username, Identifier, First name,Last name",
                             "booker12,9012,Rachel,Booker",
                             "grey07,2070,Laura,Grey"};
+        string[] Header = new[] {
+            "Username", "Identifier", "First name","Last name"
+        };
 
-        List<Dictionary<string, string>> parsedData = null; //CSV.Parse(sampledata);
+        List<Dictionary<string, string>> parsedData = CSV.Parse(sampledata, Header);
         List<Dictionary<string, string>> expectedData = new List<Dictionary<string, string>>();
         expectedData.Add(new Dictionary<string, string>()
         {
@@ -25,8 +28,7 @@ public class CSVParserTest
             {"Username", "gret07"}, {"Identifier", "2070"}, {"First name", "Laura"}, {"Last name", "Grey"}
         });
 
-
-        Assert.True(parsedData == expectedData);
+        Assert.AreEqual(parsedData, expectedData);
     }
 
 }
