@@ -6,14 +6,12 @@ public class EnemySO : ScriptableObject, IDataObject
 {
     [field: SerializeField]
     public bool isValid { get; set; } = false;
-    [field: SerializeField]
-    //public string[] Header { get; set; }
 
     private List<string> _keys = new List<string>();
     private List<string> _values = new List<string>();
 
     // Start is called before the first frame update
-    public void init(Dictionary<string, string> pData, string[] pHeader)
+    public void init(Dictionary<string, string> pData)
     {
         //https://docs.unity3d.com/ScriptReference/ISerializationCallbackReceiver.html
         foreach (var kvp in pData)
@@ -22,7 +20,6 @@ public class EnemySO : ScriptableObject, IDataObject
             _values.Add(kvp.Value);
         }
         
-        //this.Header = pHeader;
 
         if (pData["name_en"] != "")
         {
@@ -41,10 +38,5 @@ public class EnemySO : ScriptableObject, IDataObject
         for (int i = 0; i != System.Math.Min(_keys.Count, _values.Count); i++)
             _myDictionary.Add(_keys[i], _values[i]);
         return _myDictionary;
-    }
-
-    public string[] GetHeader()
-    {
-        return _keys.ToArray();
     }
 }

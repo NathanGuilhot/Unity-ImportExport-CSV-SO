@@ -11,9 +11,7 @@ public static class CSV
 
     public static string[] ParseHeader(string pData)
     {
-        Debug.Log(pData);
         string[] HeaderRow = pData.Split(",");
-        Debug.Log(HeaderRow);
         //Remove the white spaces from the headers
         for (int i = 0; i < HeaderRow.Length; i++)
         {
@@ -32,9 +30,7 @@ public static class CSV
 
         List<string[]> DataRowsList = new List<string[]>();
 
-        Debug.Log(string.Join(" - ", pHeader));
-
-        for (int i = 1; i < pData.Length; i++)
+        for (int i = 1; i < pData.Length; i++) //NOTE(Nighten) We start at i=1 to avoid the first header line
         {
             string[] DataRow = pData[i].Split(",");
 
@@ -57,24 +53,26 @@ public static class CSV
         return Result;
     }
  
-    public static string[] ReverseParse(List<Dictionary<string, string>> pData, string[] pHeaders)
+    public static string[] ReverseParse(List<Dictionary<string, string>> pData)
     {
-        pData = OrderById(pData);
+        if (pData[0].ContainsKey("id"))
+        {
+            pData = OrderById(pData);
+        }
         List<string> DataList = new List<string>();
         string HeaderRow = "";
-        Debug.Log(pData[0]["id"]);
-        foreach (string header in pHeaders)
+        foreach (KeyValuePair<string,string> header in pData[0])
         {
-            HeaderRow = $"{HeaderRow}{header},";
+            HeaderRow = $"{HeaderRow}{header.Key},";
         }
         DataList.Add(HeaderRow.Remove(HeaderRow.Length-1, 1)); //Remove the last comma
 
         for (int i = 0; i < pData.Count; i++)
         {
             string row = "";
-            foreach (string header in pHeaders)
+            foreach (KeyValuePair<string,string> header in pData[0])
             {
-                row = $"{row}{pData[i][header]},";
+                row = $"{row}{pData[i][header.Key]},";
             }
             DataList.Add(row.Remove(row.Length - 1, 1));
         }

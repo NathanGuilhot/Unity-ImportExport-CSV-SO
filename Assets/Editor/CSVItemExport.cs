@@ -26,25 +26,17 @@ public static class CSVItemExport
             return;
 
         }
-        Debug.Log("Files: "+string.Join(" ", SOFiles));
 
         List<Dictionary<string, string>> SOData = new List<Dictionary<string, string>>();
 
-        T tmpObject = AssetDatabase.LoadAssetAtPath<T>(AssetDatabase.GUIDToAssetPath(SOFiles[0]));
-
-        string[] SOHeader = tmpObject.GetHeader();
-        Debug.Log("SOHeader :" + string.Join(", ", SOHeader));
         for (int i = 0; i < SOFiles.Length; i++)
         {
             T SOInstance = AssetDatabase.LoadAssetAtPath<T>(AssetDatabase.GUIDToAssetPath(SOFiles[i]));
             SOData.Add(SOInstance.GetData());
         }
-
-        Debug.Log("Before reverse parser: "+string.Join(" ", tmpObject.GetData().Values.ToArray()));
-        Debug.Log("SOFiles count: " + SOFiles.Length);
-        Debug.Log("SOData count: "+ SOData.Count);
+        
         //Turn list into commas separated string
-        string[] StringData = CSV.ReverseParse(SOData, SOHeader);
+        string[] StringData = CSV.ReverseParse(SOData);
 
         //Put that all into the target file
         File.WriteAllLines(Application.dataPath + CSV.CSV_FILEPATH + pTargetCSV, StringData);

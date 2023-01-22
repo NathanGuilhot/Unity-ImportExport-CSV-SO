@@ -4,8 +4,8 @@
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
-        "EditorCodeDefinition",
-        "UtilsAssemblyDef"
+        "UtilsAssemblyDef",
+        "User.Editor"
     ],
     "includePlatforms": [
         "Editor"
@@ -17,9 +17,7 @@
         "nunit.framework.dll"
     ],
     "autoReferenced": false,
-    "defineConstraints": [
-        "UNITY_INCLUDE_TESTS"
-    ],
+    "defineConstraints": [],
     "versionDefines": [],
     "noEngineReferences": false
 }

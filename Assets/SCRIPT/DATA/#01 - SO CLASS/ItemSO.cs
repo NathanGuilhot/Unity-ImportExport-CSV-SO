@@ -23,7 +23,7 @@ public class ItemSO : ScriptableObject, IDataObject
     private List<string> _values = new List<string>();
 
     //TODO(Nighten) Switch the name and description to use the Translation system once it's done
-    public void init(Dictionary<string, string> pData, string[] pHeader)
+    public void init(Dictionary<string, string> pData)
     {
         //https://docs.unity3d.com/ScriptReference/ISerializationCallbackReceiver.html
         foreach (var kvp in pData)
@@ -31,7 +31,6 @@ public class ItemSO : ScriptableObject, IDataObject
             _keys.Add(kvp.Key);
             _values.Add(kvp.Value);
         }
-        //this.Header = pHeader;
 
         if (pData["name_en"] != "")
         {
@@ -65,9 +64,5 @@ public class ItemSO : ScriptableObject, IDataObject
         _myDictionary["damage"] = this.damage.ToString();
 
         return _myDictionary;
-    }
-    public string[] GetHeader()
-    {
-        return _keys.ToArray();
     }
 }

@@ -1,0 +1,21 @@
+{
+    "name": "User.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:90dd5808353ec254bb481191a8f08351",
+        "GUID:20d05ccdf1376a04c846583f703619df"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "UNITY_EDITOR"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
