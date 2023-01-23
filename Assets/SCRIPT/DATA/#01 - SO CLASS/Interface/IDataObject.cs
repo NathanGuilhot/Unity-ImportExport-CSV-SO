@@ -8,7 +8,9 @@ public interface IDataObject
 {
     public void init(Dictionary<string, string> pData);
     public bool isValid { get; set; }
+    public int id { get; set; }
 
-    //public string GetHeader();
+    //Return the same dictionary as it was inputed in init(),
+    //But changing the values that were used and could have been modified in the editor
     public Dictionary<string, string> GetData();
 }

@@ -1,4 +1,6 @@
 id,name_en,name_fr,description_en,description_fr,cost,canEquip,damage,prefab_name
-0,Arrow,Épée,Bonjour! :),Attention à pas te couper !,400,True,10,sword
-1,Foo,Fou,Bar,Bare,200,False,0,foo
-2,Sword,Épée,Careful not to cut yourself!,Attention à pas te couper !,400,True,20,sword
+0,Note,Note,A note from someone about their missing pet,Une note de quelqu'un sur la perte de son animal,0,False,0,note
+1,Sword,Épée,Careful not to cut yourself!,Attention à pas te couper !,100,True,20,sword
+2,Glowing Gem,Gemme brillante,This gem has some sort of power to it...,Ce joyau a une sorte de pouvoir...,700,False,0,gem
+3,Emerald,Émeraude,A massive emerald that's worth 500 gp.,Une émeraude massive qui vaut 500 po,500,False,0,emerald
+4,Wooden spoon,Cuillère en bois,It's cooking time!,C'est l'heure de la soupe!,2,True,3,spoon

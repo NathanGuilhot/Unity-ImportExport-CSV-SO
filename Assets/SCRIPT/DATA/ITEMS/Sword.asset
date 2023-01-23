@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d69fab5dc175b1443875fe88365d9ed8, type: 3}
   m_Name: Sword
   m_EditorClassIdentifier: 
-  id: 2
+  <id>k__BackingField: 1
   name: Sword
   description: Careful not to cut yourself!
-  cost: 400
+  cost: 100
   canEquip: 1
   damage: 20
-  prefab: {fileID: 0}
+  prefab: {fileID: 57205943026770581, guid: 6dab3f42f9ddc624e8a3d61aace7b322, type: 3}
   <isValid>k__BackingField: 1
   _keys:
   - id
@@ -36,7 +36,7 @@ MonoBehaviour:
   - "\xC9p\xE9e"
   - Careful not to cut yourself!
   - "Attention \xE0 pas te couper !"
-  - 400
-  - TRUE
+  - 100
+  - True
   - 20
   - sword

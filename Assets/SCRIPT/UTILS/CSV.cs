@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq; //Used for the List<>.Last() function
+using System.Linq;
 using UnityEngine;
 
 //Used to import, parse and export CSV and Scriptable Object

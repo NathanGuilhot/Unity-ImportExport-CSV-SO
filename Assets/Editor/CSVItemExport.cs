@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using System.IO;
-using System.Linq; //Used for the List<>.Last() function
+using System.Linq;
+using System;
 
 public static class CSVItemExport
 {
@@ -19,7 +20,7 @@ public static class CSVItemExport
         Debug.Log($"Export {pFolderName}...");
 
         //Grab all scriptable object from pFolderName
-        string[] SOFiles = AssetDatabase.FindAssets($"t:{typeof(T).Name}", new[] { $"{CSV.DATA_FILEPATH}/{pFolderName}" });
+        string[] SOFiles = SOFileManagement.ListOfFilesWithClass<T>(pFolderName);
         if (SOFiles.Length == 0)
         {
             Debug.LogError($"No valid Files found in {pFolderName}");
@@ -46,4 +47,6 @@ public static class CSVItemExport
         //Done!
         Debug.Log("Export successful!");
     }
+
+    
 }

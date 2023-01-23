@@ -17,4 +17,19 @@ MonoBehaviour:
   - id
   - name_en
   - name_fr
+  - PV
+  - Attack
   - loot
+  - prefab_name
+  _values:
+  - 1
+  - Goblin
+  - Goblin
+  - 30
+  - 
+  - 
+  - goblin
+  <id>k__BackingField: 1
+  name: Goblin
+  prefab: {fileID: 1628951152996457704, guid: 0e39cf24b1d30974caafc2ffd84cd989, type: 3}
+  loot: {fileID: 0}

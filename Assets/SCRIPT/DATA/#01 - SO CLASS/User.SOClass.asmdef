@@ -1,0 +1,17 @@
+{
+    "name": "User.SOClass",
+    "rootNamespace": "",
+    "references": [
+        "GUID:20d05ccdf1376a04c846583f703619df",
+        "GUID:0e3448500a6163846be04af3a94d6a2f"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

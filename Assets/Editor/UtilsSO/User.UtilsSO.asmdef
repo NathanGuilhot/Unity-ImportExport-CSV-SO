@@ -1,0 +1,19 @@
+{
+    "name": "User.UtilsSO",
+    "rootNamespace": "",
+    "references": [
+        "GUID:20d05ccdf1376a04c846583f703619df",
+        "GUID:90dd5808353ec254bb481191a8f08351"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

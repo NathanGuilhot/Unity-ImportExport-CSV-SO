@@ -1,28 +1,26 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class ItemSO : ScriptableObject, IDataObject
 {
-    public int id;
+    [field:SerializeField]
+    public int id { get; set; }
     public new string name;
     public string description;
     public int cost;
     public bool canEquip;
     public int damage;
-    public GameObject prefab;
+    public UnityEngine.Object prefab;
 
-    [field: SerializeField]
     public bool isValid { get; set; } = false;
 
-    [field: SerializeField]
     private List<string> _keys = new List<string>();
-    [field: SerializeField]
     private List<string> _values = new List<string>();
 
-    //TODO(Nighten) Switch the name and description to use the Translation system once it's done
+    const string PREFAB_PATH = "Assets/PREFAB/ITEMS/";
+    
     public void init(Dictionary<string, string> pData)
     {
         //https://docs.unity3d.com/ScriptReference/ISerializationCallbackReceiver.html
@@ -32,37 +30,38 @@ public class ItemSO : ScriptableObject, IDataObject
             _values.Add(kvp.Value);
         }
 
-        if (pData["name_en"] != "")
-        {
-            this.isValid = true;
-        }
-        else
+        if (pData["name_en"] == "")
         {
             return;
         }
+
         this.id = int.Parse(pData["id"]);
         this.name = pData["name_en"];
         this.description = pData["description_en"];
         this.cost = (pData["damage"] != "") ? int.Parse(pData["cost"]):0;
         this.canEquip = bool.Parse(pData["canEquip"]);
         this.damage = (pData["damage"]!="")?int.Parse(pData["damage"]):0;
-        //pData["prefab_name"];
+        
+        this.prefab = SOFileManagement.LoadAssetFromFile<UnityEngine.Object>(PREFAB_PATH, pData["prefab_name"] + ".prefab");
+
+        this.isValid = true;
 
     }
     public Dictionary<string, string> GetData()
     {
-        Dictionary<string, string> _myDictionary = new Dictionary<string, string>();
+        Dictionary<string, string> SOData = new Dictionary<string, string>();
 
         for (int i = 0; i != Math.Min(_keys.Count, _values.Count); i++)
-            _myDictionary.Add(_keys[i], _values[i]);
+            SOData.Add(_keys[i], _values[i]);
 
-        _myDictionary["id"] = this.id.ToString();
-        _myDictionary["name_en"] = this.name;
-        _myDictionary["description_en"] = this.description;
-        _myDictionary["damage"] = this.damage.ToString();
-        _myDictionary["canEquip"] = this.canEquip.ToString();
-        _myDictionary["damage"] = this.damage.ToString();
+        SOData["id"] = this.id.ToString();
+        SOData["name_en"] = this.name;
+        SOData["description_en"] = this.description;
+        SOData["damage"] = this.damage.ToString();
+        SOData["canEquip"] = this.canEquip.ToString();
+        SOData["damage"] = this.damage.ToString();
+        SOData["prefab_name"] = this.prefab != null ? this.prefab.name : "";
 
-        return _myDictionary;
+        return SOData;
     }
 }

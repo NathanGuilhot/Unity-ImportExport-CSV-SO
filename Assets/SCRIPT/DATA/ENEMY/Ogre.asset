@@ -17,4 +17,19 @@ MonoBehaviour:
   - id
   - name_en
   - name_fr
+  - PV
+  - Attack
   - loot
+  - prefab_name
+  _values:
+  - 0
+  - Ogre
+  - Ogre
+  - 60
+  - 
+  - 2
+  - ogre
+  <id>k__BackingField: 0
+  name: Ogre
+  prefab: {fileID: 1628951152996457704, guid: c82162a37f9c5b24f83d6b01b869abe7, type: 3}
+  loot: {fileID: 11400000, guid: 73aca48465186734f91cb0c748669826, type: 2}
