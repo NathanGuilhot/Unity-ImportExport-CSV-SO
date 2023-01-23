@@ -7,7 +7,7 @@ This script allows the fast iteration of ScriptableObject, while not requiring f
 - The two editor script you're gonna need to edit are the [CSVItemImport](Assets/Editor/CSVItemImport.cs) and the [CSVItemExport](Assets/Editor/CSVItemExport.cs). There, you'll be able to list the SciptableObject you want to import/export.
 - The configuration for the CSV and ScriptableObject location is in the [CSV](Assets/SCRIPT/UTILS/CSV.cs) class
 - The static class [CSV](Assets/SCRIPT/UTILS/CSV.cs) contain the parser to go back and forth between a CSV file and a list of dictionnaries that will be used by the ScriptableObjects
-- Every ScriptableObject must use the [IDataObject](Assets/SCRIPT/DATA/1-SO_CLASS/Interface/IDataObject.cs) interface
+- Every ScriptableObject must use the [IDataObject](Assets/SCRIPT/DATA/01-SO_CLASS/Interface/IDataObject.cs) interface
 	- The init() function act as a constructor, and must validate the data and raise the flag *isValid* if everything initialized correctly
 	- A unique field *id* must be present so that we can easely reference objects between sheet **(that's the only required field in your CSV)**
 	- GetData() is used for exporting: it return the data used for the initialization, but by changing the field that could have been edited in the inspector
