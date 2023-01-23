@@ -11,7 +11,7 @@ This script allows the fast iteration of ScriptableObject, while not requiring f
 	- The init() function act as a constructor, and must validate the data and raise the flag *isValid* if everything initialized correctly
 	- A unique field *id* must be present so that we can easely reference objects between sheet **(that's the only required field in your CSV)**
 	- GetData() is used for exporting: it return the data used for the initialization, but by changing the field that could have been edited in the inspector
-- To help you, I created [a minimal template for your ScriptableObject](<Assets\SCRIPT\DATA\#01-SO_CLASS\MinimalSO.cs>). You can also refer to the two example class, [ItemSO](<Assets\SCRIPT\DATA\#01-SO_CLASS\ItemSO.cs>) and [EnemySO](<Assets\SCRIPT\DATA\#01-SO_CLASS\EnemySO.cs>).
+- To help you, I created [a minimal template for your ScriptableObject](<Assets\SCRIPT\DATA\01-SO_CLASS\MinimalSO.cs>). You can also refer to the two example class, [ItemSO](<Assets\SCRIPT\DATA\01-SO_CLASS\ItemSO.cs>) and [EnemySO](<Assets\SCRIPT\DATA\01-SO_CLASS\EnemySO.cs>).
 
 ## Optional utilities
 - In your SO constructor, you can use [SOFileManagement.GetSOWithId<ItemSO>(int id, string SO_folder)](Assets\Editor\UtilsSO\SOFileManagement.cs) to reference another SO.
