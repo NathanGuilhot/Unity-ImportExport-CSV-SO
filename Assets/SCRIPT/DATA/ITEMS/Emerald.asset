@@ -19,24 +19,3 @@ MonoBehaviour:
   canEquip: 0
   damage: 0
   prefab: {fileID: 57205943026770581, guid: 9b37877a0992917468d3a9f28b565604, type: 3}
-  <isValid>k__BackingField: 1
-  _keys:
-  - id
-  - name_en
-  - name_fr
-  - description_en
-  - description_fr
-  - cost
-  - canEquip
-  - damage
-  - prefab_name
-  _values:
-  - 3
-  - Emerald
-  - "\xC9meraude"
-  - A massive emerald that's worth 500 gp.
-  - "Une \xE9meraude massive qui vaut 500 po"
-  - 500
-  - False
-  - 0
-  - emerald

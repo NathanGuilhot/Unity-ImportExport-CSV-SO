@@ -19,24 +19,3 @@ MonoBehaviour:
   canEquip: 1
   damage: 20
   prefab: {fileID: 57205943026770581, guid: 6dab3f42f9ddc624e8a3d61aace7b322, type: 3}
-  <isValid>k__BackingField: 1
-  _keys:
-  - id
-  - name_en
-  - name_fr
-  - description_en
-  - description_fr
-  - cost
-  - canEquip
-  - damage
-  - prefab_name
-  _values:
-  - 1
-  - Sword
-  - "\xC9p\xE9e"
-  - Careful not to cut yourself!
-  - "Attention \xE0 pas te couper !"
-  - 100
-  - True
-  - 20
-  - sword

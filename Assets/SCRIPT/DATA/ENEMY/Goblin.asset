@@ -12,24 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 748e61ab8fe203f41928b090be98cd25, type: 3}
   m_Name: Goblin
   m_EditorClassIdentifier: 
-  <isValid>k__BackingField: 1
-  _keys:
-  - id
-  - name_en
-  - name_fr
-  - PV
-  - Attack
-  - loot
-  - prefab_name
-  _values:
-  - 1
-  - Goblin
-  - Goblin
-  - 30
-  - 
-  - 
-  - goblin
   <id>k__BackingField: 1
   name: Goblin
-  prefab: {fileID: 1628951152996457704, guid: 0e39cf24b1d30974caafc2ffd84cd989, type: 3}
+  PV: 30
+  Attack: 15
   loot: {fileID: 0}
+  prefab: {fileID: 1628951152996457704, guid: 0e39cf24b1d30974caafc2ffd84cd989, type: 3}

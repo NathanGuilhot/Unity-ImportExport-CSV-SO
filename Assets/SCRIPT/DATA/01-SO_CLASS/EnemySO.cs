@@ -11,11 +11,11 @@ public class EnemySO : ScriptableObject, IDataObject
 
     [field: SerializeField]
     public int id { get; set; }
-    [SerializeField] new string name;
-    [SerializeField] int PV;
-    [SerializeField] int Attack;
-    [SerializeField] ItemSO loot;
-    [SerializeField] UnityEngine.Object prefab;
+    [SerializeField] public new string name;
+    [SerializeField] public int PV;
+    [SerializeField] public int Attack;
+    [SerializeField] public ItemSO loot;
+    [SerializeField] public UnityEngine.Object prefab;
 
     const string ITEMSO_FOLDER = "ITEMS";
     const string PREFAB_PATH = "Assets/PREFAB/ENEMY/";
@@ -36,8 +36,11 @@ public class EnemySO : ScriptableObject, IDataObject
 
         this.id = int.Parse(pData["id"]);
         this.name = pData["name_en"];
+        this.PV = int.Parse(pData["PV"]);
+        this.Attack = int.Parse(pData["Attack"]);
 
-        if (pData["loot"] != "")
+        Debug.Log(pData["loot"]);
+        if (pData["loot"] != string.Empty)
         {
             this.loot = SOFileManagement.GetSOWithId<ItemSO>(int.Parse(pData["loot"]), ITEMSO_FOLDER);
         }
