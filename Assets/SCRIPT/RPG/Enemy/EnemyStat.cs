@@ -13,7 +13,8 @@ public class EnemyStat : MonoBehaviour, IEntityStat
     public Action<GameObject> OnDestroyed;
 
     private Animator anim;
-    private bool alive = true;
+    private bool isAlive = true;
+    private bool inAction = false;
 
     private void Start()
     {
@@ -30,16 +31,31 @@ public class EnemyStat : MonoBehaviour, IEntityStat
 
     private void Update()
     {
-        if (alive)
+        if (isAlive && !inAction)
         {
-            if (Input.GetMouseButtonDown(0))
+            switch (GameManager.GameState)
             {
-                GameManager.FX.DisplayDamage(10, transform.position + new Vector3(4f, 0f, -0.5f));
-                PV = Mathf.Max(PV-10, 0);
-            }
-            if (PV <= 0)
-            {
-                StartCoroutine(OnDead());
+                case GameManager.GAMESTATE.PLAYER_TURN:
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        GameManager.FX.DisplayDamage(10, transform.position + new Vector3(4f, 0f, -0.5f));
+                        PV = Mathf.Max(PV-10, 0);
+                        if (PV <= 0)
+                        {
+                            StartCoroutine(OnDead());
+                        }
+                        else
+                            anim.Play("EnemyDamage 0");
+                        GameManager.TurnEnded();
+                    }
+                    break;
+                case GameManager.GAMESTATE.ENEMY_TURN:
+                    inAction = true;
+                    Debug.Log("Enemy's turn!");
+                    StartCoroutine(OnAttack());
+                    break;
+                default:
+                    break;
             }
 
         }
@@ -47,10 +63,25 @@ public class EnemyStat : MonoBehaviour, IEntityStat
 
     private IEnumerator OnDead()
     {
-        alive = false;
+        isAlive = false;
         anim.SetBool("alive", false);
         yield return new WaitForSeconds(0.5f);
         OnDestroyed?.Invoke(this.gameObject);
+    }
+    private IEnumerator OnAttack()
+    {
+        anim.SetBool("attack", true);
+        yield return new WaitForSeconds(0.5f);
+        anim.SetBool("attack", false);
+        //NOTE(Nighten) We switch this bool quickly so we can be sure the animation is played at exit time of the spawn
+        //              Playing the animation directly doesn't allow that
+        //anim.Play("EnemyAttack 0");
+    }
+
+    public void OnAttackEnded()
+    {
+        inAction = false;
+        GameManager.TurnEnded();
     }
 }
 

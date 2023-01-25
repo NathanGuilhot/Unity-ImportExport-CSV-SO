@@ -1,18 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class UIController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    Dictionary<GameManager.GAMESTATE, string> TurnMessage = new Dictionary<GameManager.GAMESTATE, string>()
     {
-        
+        { GameManager.GAMESTATE.ENEMY_TURN, "ENEMY'S TURN!" },
+        { GameManager.GAMESTATE.PLAYER_TURN, "YOUR TURN!"},
+    };
+
+    [SerializeField]
+    private TextMeshProUGUI TurnTextObj;
+
+    private void OnEnable()
+    {
+        GameManager.OnTurnChanged += TurnChanged;
+    }
+    private void OnDisable()
+    {
+        GameManager.OnTurnChanged -= TurnChanged;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void TurnChanged(GameManager.GAMESTATE pState)
     {
-        
+        TurnTextObj.text = TurnMessage[pState];
     }
 }
