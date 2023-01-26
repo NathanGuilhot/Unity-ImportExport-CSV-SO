@@ -12,7 +12,7 @@ public class ItemSO : ScriptableObject, IDataObject
     public int cost;
     public bool canEquip;
     public int damage;
-    public UnityEngine.Object prefab;
+    public GameObject prefab;
 
     public bool isValid { get; set; } = false;
 
@@ -42,7 +42,7 @@ public class ItemSO : ScriptableObject, IDataObject
         this.canEquip = bool.Parse(pData["canEquip"]);
         this.damage = (pData["damage"]!="")?int.Parse(pData["damage"]):0;
         
-        this.prefab = SOFileManagement.LoadAssetFromFile<UnityEngine.Object>(PREFAB_PATH, pData["prefab_name"] + ".prefab");
+        this.prefab = SOFileManagement.LoadAssetFromFile<GameObject>(PREFAB_PATH, pData["prefab_name"] + ".prefab");
 
         this.isValid = true;
 

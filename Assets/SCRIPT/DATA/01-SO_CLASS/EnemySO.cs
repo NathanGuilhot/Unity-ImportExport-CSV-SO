@@ -15,7 +15,7 @@ public class EnemySO : ScriptableObject, IDataObject
     [SerializeField] public int PV;
     [SerializeField] public int Attack;
     [SerializeField] public ItemSO loot;
-    [SerializeField] public UnityEngine.Object prefab;
+    [SerializeField] public GameObject prefab;
 
     const string ITEMSO_FOLDER = "ITEMS";
     const string PREFAB_PATH = "Assets/PREFAB/ENEMY/";
@@ -45,7 +45,7 @@ public class EnemySO : ScriptableObject, IDataObject
             this.loot = SOFileManagement.GetSOWithId<ItemSO>(int.Parse(pData["loot"]), ITEMSO_FOLDER);
         }
 
-        this.prefab = SOFileManagement.LoadAssetFromFile<UnityEngine.Object>(PREFAB_PATH, pData["prefab_name"]+".prefab");
+        this.prefab = SOFileManagement.LoadAssetFromFile<GameObject>(PREFAB_PATH, pData["prefab_name"]+".prefab");
 
         this.isValid = true;
     }

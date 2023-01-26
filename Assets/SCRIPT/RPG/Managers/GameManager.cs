@@ -5,10 +5,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public static IFXController FX;
-
-    public delegate void TurnChanged(GameManager.GAMESTATE pState);
-    public static event TurnChanged OnTurnChanged;
+    public static IFXController FX { get; private set; }
+    public static PlayerInventory Inventory { get; private set; }
 
     public enum GAMESTATE
     {
@@ -21,7 +19,15 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         FX = GetComponent<IFXController>();
-        OnTurnChanged?.Invoke(GameState);
+        Inventory = GetComponent<PlayerInventory>();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            Inventory.LogInventory();
+        }
     }
 
     public static void TurnEnded()
@@ -31,7 +37,7 @@ public class GameManager : MonoBehaviour
         else if (GameState == GAMESTATE.ENEMY_TURN)
             GameState = GAMESTATE.PLAYER_TURN;
 
-        OnTurnChanged?.Invoke(GameState);
+        GameEvent.EndTurnEvent(GameState);
     }
 
 }

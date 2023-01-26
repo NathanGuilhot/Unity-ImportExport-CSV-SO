@@ -7,8 +7,11 @@ public class EnemyStat : MonoBehaviour, IEntityStat
 {
     [SerializeField] new string name;
     [field: SerializeField] public int PV { get; set; }
+    int PV_Max;
     [field:SerializeField] public int Attack { get; set; }
     [SerializeField] ItemSO loot;
+
+    [SerializeField] LifeBar _lifeBar;
 
     public Action<GameObject> OnDestroyed;
 
@@ -24,6 +27,7 @@ public class EnemyStat : MonoBehaviour, IEntityStat
     public void Init(EnemySO pData)
     {
         name = pData.name;
+        PV_Max = pData.PV;
         PV = pData.PV;
         Attack = pData.Attack;
         loot = pData.loot;
@@ -39,7 +43,10 @@ public class EnemyStat : MonoBehaviour, IEntityStat
                     if (Input.GetMouseButtonDown(0))
                     {
                         GameManager.FX.DisplayDamage(10, transform.position + new Vector3(4f, 0f, -0.5f));
-                        PV = Mathf.Max(PV-10, 0);
+
+                        PV = Mathf.Max(PV - 10, 0);
+                        _lifeBar.SetValue((float)PV / (float)PV_Max);
+
                         if (PV <= 0)
                         {
                             StartCoroutine(OnDead());
@@ -65,6 +72,8 @@ public class EnemyStat : MonoBehaviour, IEntityStat
     {
         isAlive = false;
         anim.SetBool("alive", false);
+        if (loot != null)
+            ItemDrop();
         yield return new WaitForSeconds(0.5f);
         OnDestroyed?.Invoke(this.gameObject);
     }
@@ -82,6 +91,19 @@ public class EnemyStat : MonoBehaviour, IEntityStat
     {
         inAction = false;
         GameManager.TurnEnded();
+    }
+
+    void ItemDrop()
+    {
+        bool success = GameManager.Inventory.AddItem(loot);
+            GameObject LootDropped = Instantiate(loot.prefab) as GameObject;
+            LootDropped.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+            LootDropped.AddComponent<AnimationAutoDestroy>();
+        if (!success)
+        {
+            Debug.Log("No longer space in inventory");
+            return;
+        }
     }
 }
 

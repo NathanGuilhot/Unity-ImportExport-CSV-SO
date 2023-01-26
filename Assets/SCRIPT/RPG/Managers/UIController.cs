@@ -16,11 +16,11 @@ public class UIController : MonoBehaviour
 
     private void OnEnable()
     {
-        GameManager.OnTurnChanged += TurnChanged;
+        GameEvent.OnTurnChanged += TurnChanged;
     }
     private void OnDisable()
     {
-        GameManager.OnTurnChanged -= TurnChanged;
+        GameEvent.OnTurnChanged -= TurnChanged;
     }
 
     public void TurnChanged(GameManager.GAMESTATE pState)

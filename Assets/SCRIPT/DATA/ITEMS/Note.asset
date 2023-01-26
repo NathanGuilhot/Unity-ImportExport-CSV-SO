@@ -18,4 +18,4 @@ MonoBehaviour:
   cost: 0
   canEquip: 0
   damage: 0
-  prefab: {fileID: 57205943026770581, guid: df52d1fc24fc2d34498acd90121a70a7, type: 3}
+  prefab: {fileID: 7394978921394666334, guid: 2ed0db3b0d8bb1c44bd2511e3760c9bc, type: 3}

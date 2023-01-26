@@ -19,10 +19,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void Update()
     {
-        if (ActiveEnemy==null)
-        {
-
-        }
+        
     }
 
     void SpawnMonster()
