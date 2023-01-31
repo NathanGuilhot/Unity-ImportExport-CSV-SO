@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ItemSO : ScriptableObject, IDataObject
@@ -9,10 +10,18 @@ public class ItemSO : ScriptableObject, IDataObject
     public int id { get; set; }
     public new string name;
     public string description;
-    public int cost;
+    public int price;
     public bool canEquip;
+    public bool canUse;
     public int damage;
+
+    public bool isPotion;
+    public bool targetPlayer;
+    public PotionType potionType;
+    public int PotionValue;
+
     public GameObject prefab;
+    public Sprite sprite;
 
     public bool isValid { get; set; } = false;
 
@@ -20,7 +29,25 @@ public class ItemSO : ScriptableObject, IDataObject
     private List<string> _values = new List<string>();
 
     const string PREFAB_PATH = "Assets/PREFAB/ITEMS/";
-    
+
+    public enum PotionType
+    {
+        heal,
+        love,
+        enrage,
+        pacifier
+    }
+
+    static Dictionary<string, PotionType> _potionNameMap = new Dictionary<string, PotionType>
+    {
+        {"heal", PotionType.heal },
+        {"love", PotionType.love },
+        {"enrage", PotionType.enrage },
+        {"pacifier", PotionType.pacifier },
+    };
+    static Dictionary<PotionType, string> _potionTypeMap = _potionNameMap.ToDictionary((i) => i.Value, (i) => i.Key);
+
+
     public void init(Dictionary<string, string> pData)
     {
         //https://docs.unity3d.com/ScriptReference/ISerializationCallbackReceiver.html
@@ -38,11 +65,23 @@ public class ItemSO : ScriptableObject, IDataObject
         this.id = int.Parse(pData["id"]);
         this.name = pData["name_en"];
         this.description = pData["description_en"];
-        this.cost = (pData["damage"] != "") ? int.Parse(pData["cost"]):0;
         this.canEquip = bool.Parse(pData["canEquip"]);
+        this.canUse = bool.Parse(pData["canUse"]);
         this.damage = (pData["damage"]!="")?int.Parse(pData["damage"]):0;
-        
+
+        this.price = (pData["price"] != "") ? int.Parse(pData["price"]) : 0;
+
+        this.isPotion = (pData["potionType"] != "");
+        if (this.isPotion)
+        {
+            this.targetPlayer = bool.Parse(pData["targetPlayer"]);
+            this.potionType = _potionNameMap[pData["potionType"]];
+            this.PotionValue = (pData["potionValue"] != "") ? int.Parse(pData["potionValue"]) : 0;
+        }
+
+
         this.prefab = SOFileManagement.LoadAssetFromFile<GameObject>(PREFAB_PATH, pData["prefab_name"] + ".prefab");
+        this.sprite = this.prefab.GetComponent<SpriteRenderer>().sprite;
 
         this.isValid = true;
 
@@ -59,7 +98,21 @@ public class ItemSO : ScriptableObject, IDataObject
         SOData["description_en"] = this.description;
         SOData["damage"] = this.damage.ToString();
         SOData["canEquip"] = this.canEquip.ToString();
-        SOData["damage"] = this.damage.ToString();
+        SOData["canUse"] = this.canUse.ToString();
+
+        SOData["price"] = this.price.ToString();
+
+        SOData["targetPlayer"] = "";
+        SOData["potionType"] = "";
+        SOData["potionValue"] = "";
+
+        if (this.isPotion)
+        {
+            SOData["targetPlayer"] = this.targetPlayer.ToString();
+            SOData["potionType"] = _potionTypeMap[this.potionType];
+            SOData["potionValue"] = this.PotionValue.ToString() ;
+        }
+
         SOData["prefab_name"] = this.prefab != null ? this.prefab.name : "";
 
         return SOData;

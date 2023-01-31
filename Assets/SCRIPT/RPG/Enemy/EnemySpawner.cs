@@ -6,7 +6,7 @@ public class EnemySpawner : MonoBehaviour
 {
     [SerializeField]
     EnemySO[] Enemies;
-    public GameObject ActiveEnemy;
+    public static EnemyStat ActiveEnemy;
 
     private void OnEnable()
     {
@@ -27,9 +27,9 @@ public class EnemySpawner : MonoBehaviour
         if (Enemies.Length > 0)
         {
             EnemySO RandomEnemy = Enemies[Random.Range(0, Enemies.Length)];
-            ActiveEnemy = Instantiate(RandomEnemy.prefab) as GameObject;
-            ActiveEnemy.GetComponent<EnemyStat>().Init(RandomEnemy);
-            ActiveEnemy.GetComponent<EnemyStat>().OnDestroyed = OnMonsterDestroy;
+            ActiveEnemy = Instantiate(RandomEnemy.prefab, transform).GetComponent<EnemyStat>();
+            ActiveEnemy.Init(RandomEnemy);
+            ActiveEnemy.OnDestroyed = OnMonsterDestroy;
         }
     }
 

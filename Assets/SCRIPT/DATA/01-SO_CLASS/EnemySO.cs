@@ -58,6 +58,8 @@ public class EnemySO : ScriptableObject, IDataObject
 
         SOData["id"] = this.id.ToString();
         SOData["name_en"] = this.name;
+        SOData["PV"] = this.PV.ToString();
+        SOData["Attack"] = this.Attack.ToString();
         SOData["loot"] = this.loot != null ? this.loot.id.ToString() : "";
         SOData["prefab_name"] = this.prefab != null ? this.prefab.name : "";
 

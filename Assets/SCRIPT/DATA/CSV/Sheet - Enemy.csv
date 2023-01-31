@@ -1,5 +1,5 @@
-id,name_en,name_fr,PV,Attack,loot,prefab_name
-0,Ogre,Ogre,60,20,2,ogre
-1,Goblin,Goblin,30,15,,goblin
-2,Raccoon,Raton laveur,10,5,,raccoon
-3,Slime,Slime,20,10,,slime
+id,name_en,PV,Attack,loot,prefab_name
+0,Ogre,60,20,2,ogre
+1,Goblin,30,15,4,goblin
+2,Raccoon,10,5,,raccoon
+3,Slime,20,10,3,slime

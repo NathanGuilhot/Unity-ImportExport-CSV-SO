@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 //Used to import, parse and export CSV and Scriptable Object
@@ -9,14 +10,18 @@ public static class CSV
     public const string CSV_FILEPATH = "/SCRIPT/DATA/CSV/";
     public const string DATA_FILEPATH = "Assets/SCRIPT/DATA"; //Were the SO folder will be created
 
+    //NOTE(Nighten) This regex search for commas outside the quotation marks only. Used to split the lines.
+    public const string REGEXCOMMAS = ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)";
     public static string[] ParseHeader(string pData)
     {
-        string[] HeaderRow = pData.Split(",");
+        //string[] HeaderRow = pData.Split(",");
+        string[] HeaderRow = Regex.Split(pData, REGEXCOMMAS);
+
         //Remove the white spaces from the headers
         for (int i = 0; i < HeaderRow.Length; i++)
         {
             //string HeaderTitle = HeaderRow[i];
-            HeaderRow[i] = HeaderRow[i].Trim();
+            HeaderRow[i] = HeaderRow[i].Trim().Trim('"');
         }
         return HeaderRow;
 
@@ -32,7 +37,8 @@ public static class CSV
 
         for (int i = 1; i < pData.Length; i++) //NOTE(Nighten) We start at i=1 to avoid the first header line
         {
-            string[] DataRow = pData[i].Split(",");
+            string[] DataRow = Regex.Split(pData[i], REGEXCOMMAS); 
+            //pData[i].Split(",");
 
             //Don't add entries that are empty or missing column (like the last line)
             if (DataRow.Length != pHeader.Length)
@@ -45,7 +51,8 @@ public static class CSV
             {
                 //We Trim the data just so we avoid unexpected results:
                 //  white spaces are rarely a disired feature and can be introduced by the spreadsheet program when exporting
-                Result.Last().Add(pHeader[j], DataRow[j].Trim()); 
+                Result.Last().Add(pHeader[j], DataRow[j].Trim().Trim('"')); 
+                 
             }
 
         }

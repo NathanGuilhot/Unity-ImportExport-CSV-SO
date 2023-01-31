@@ -16,5 +16,5 @@ MonoBehaviour:
   name: Slime
   PV: 20
   Attack: 10
-  loot: {fileID: 0}
+  loot: {fileID: 11400000, guid: 39b263bc89f70c544a16e72e4a8952c8, type: 2}
   prefab: {fileID: 3296753388263008884, guid: b1e1713c48bef224a80e1463472c2168, type: 3}

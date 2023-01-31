@@ -15,7 +15,13 @@ MonoBehaviour:
   <id>k__BackingField: 4
   name: Wooden spoon
   description: It's cooking time!
-  cost: 2
+  price: 5
   canEquip: 1
-  damage: 3
+  canUse: 0
+  damage: 15
+  isPotion: 0
+  targetPlayer: 0
+  potionType: 0
+  PotionValue: 0
   prefab: {fileID: 7394978921394666334, guid: a03af4330f18fcc4a967c710df6e658c, type: 3}
+  sprite: {fileID: 21300000, guid: a74429431a0025f4a818bcadd5d81f72, type: 3}

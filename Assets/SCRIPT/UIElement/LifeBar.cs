@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class LifeBar : MonoBehaviour
-{
-    private float _value = 1f;
+{ 
     [SerializeField] private float _targetValue = 1f;
     [SerializeField] private float _feedbackTargetValue = 1f;
     [SerializeField] private float _smoothtime = 0.2f;
@@ -14,11 +13,6 @@ public class LifeBar : MonoBehaviour
     [SerializeField] RectTransform _Foreground;
     [SerializeField] RectTransform _FeedbackBar;
     
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()

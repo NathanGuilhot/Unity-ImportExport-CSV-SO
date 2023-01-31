@@ -2,13 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class EnemyStat : MonoBehaviour, IEntityStat
 {
     [SerializeField] new string name;
     [field: SerializeField] public int PV { get; set; }
     int PV_Max;
-    [field:SerializeField] public int Attack { get; set; }
+    [field: SerializeField] public int Attack { get; set; }
     [SerializeField] ItemSO loot;
 
     [SerializeField] LifeBar _lifeBar;
@@ -33,36 +34,40 @@ public class EnemyStat : MonoBehaviour, IEntityStat
         loot = pData.loot;
     }
 
+    public void GetDamage(uint pAmount)
+    {
+        pAmount = (uint)ChainIntDelegate((int)pAmount, CheckDamage);
+
+        GameManager.FX.DisplayDamage((int)pAmount, transform.position + new Vector3(4f, 0f, -0.5f));
+
+        PV = Mathf.Max(PV - (int)pAmount, 0);
+        _lifeBar.SetValue((float)PV / (float)PV_Max);
+
+        if (PV <= 0)
+        {
+            StartCoroutine(OnDead());
+        }
+        else
+        {
+            if (!inAction)
+                anim.Play("EnemyDamage 0");
+        }
+    }
+
+    public void PerformAttack(uint pAmount)
+    {
+        inAction = true;
+        Debug.Log("Enemy's turn!");
+        StartCoroutine(OnAttack());
+    }
+
     private void Update()
     {
         if (isAlive && !inAction)
         {
-            switch (GameManager.GameState)
+            if (GameManager.GameState == GameManager.GAMESTATE.ENEMY_TURN)
             {
-                case GameManager.GAMESTATE.PLAYER_TURN:
-                    if (Input.GetMouseButtonDown(0))
-                    {
-                        GameManager.FX.DisplayDamage(10, transform.position + new Vector3(4f, 0f, -0.5f));
-
-                        PV = Mathf.Max(PV - 10, 0);
-                        _lifeBar.SetValue((float)PV / (float)PV_Max);
-
-                        if (PV <= 0)
-                        {
-                            StartCoroutine(OnDead());
-                        }
-                        else
-                            anim.Play("EnemyDamage 0");
-                        GameManager.TurnEnded();
-                    }
-                    break;
-                case GameManager.GAMESTATE.ENEMY_TURN:
-                    inAction = true;
-                    Debug.Log("Enemy's turn!");
-                    StartCoroutine(OnAttack());
-                    break;
-                default:
-                    break;
+                PerformAttack((uint)this.Attack);
             }
 
         }
@@ -73,18 +78,30 @@ public class EnemyStat : MonoBehaviour, IEntityStat
         isAlive = false;
         anim.SetBool("alive", false);
         if (loot != null)
-            ItemDrop();
+            ItemDrop(loot);
         yield return new WaitForSeconds(0.5f);
         OnDestroyed?.Invoke(this.gameObject);
     }
     private IEnumerator OnAttack()
     {
+        if ((bool)!CanAttack?.Invoke())
+        {
+            Debug.Log("Can't attack");
+            OnAttackEnded();
+            yield break;
+        }
         anim.SetBool("attack", true);
         yield return new WaitForSeconds(0.5f);
-        anim.SetBool("attack", false);
         //NOTE(Nighten) We switch this bool quickly so we can be sure the animation is played at exit time of the spawn
         //              Playing the animation directly doesn't allow that
-        //anim.Play("EnemyAttack 0");
+        anim.SetBool("attack", false);
+
+        yield return new WaitForSeconds(0.3f);
+        PerformOnAttack?.Invoke();
+        GameManager.Player.GetDamage((uint)ChainIntDelegate(Attack, CheckAttack));
+
+        yield return new WaitForSeconds(0.3f);
+        OnAttackEnded();
     }
 
     public void OnAttackEnded()
@@ -93,18 +110,49 @@ public class EnemyStat : MonoBehaviour, IEntityStat
         GameManager.TurnEnded();
     }
 
-    void ItemDrop()
+    void ItemDrop(ItemSO pLoot)
     {
-        bool success = GameManager.Inventory.AddItem(loot);
-            GameObject LootDropped = Instantiate(loot.prefab) as GameObject;
-            LootDropped.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
-            LootDropped.AddComponent<AnimationAutoDestroy>();
+        bool success = GameManager.Inventory.AddItem(pLoot);
+        GameObject LootDropped = Instantiate(pLoot.prefab);
+        LootDropped.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+        LootDropped.AddComponent<AnimationAutoDestroy>();
         if (!success)
         {
-            Debug.Log("No longer space in inventory");
-            return;
+            GameEvent.NotificationEvent("Inventory is full!");
         }
     }
+    
+    public void Heal(int pAmount)
+    {
+        PV = Mathf.Min(PV + pAmount, PV_Max);
+        _lifeBar.SetValue((float)PV / (float)PV_Max);
+
+        GameEvent.NotificationEvent("The enemy is healing!");
+    }
+
+    //---
+    //Events
+    public delegate int _ProcessInt(int pAmount);
+    public delegate int _CheckAttack(int pAmount);
+    public delegate bool _CanAttack();
+    public delegate void _PerformOnAttack();
+
+    public List<_ProcessInt> CheckDamage = new List<_ProcessInt>();
+    public List<_ProcessInt> CheckAttack = new List<_ProcessInt>();
+    public _CanAttack CanAttack = () => true;
+    public _PerformOnAttack PerformOnAttack;
+
+    public int ChainIntDelegate(int pAmount, List<_ProcessInt> pDelegateList)
+    {
+        int result = pAmount;
+        for (int i = 0; i < pDelegateList.Count; i++)
+        {
+            result = pDelegateList[i](result);
+        }
+        return result;
+    }
 }
+
+
 
 

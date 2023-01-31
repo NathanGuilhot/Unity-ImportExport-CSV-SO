@@ -10,6 +10,7 @@ public class GameEvent: MonoBehaviour
     public delegate void GameOver();
     public delegate void TurnChanged(GameManager.GAMESTATE pState);
     public delegate void InventoryChanged(KeyValuePair<ItemSO, int>[] pInventory);
+    public delegate void Notification(string pText);
 
     public static event GameStart OnGameStart;
     public static event Encounter OnEncounter;
@@ -17,6 +18,7 @@ public class GameEvent: MonoBehaviour
     public static event GameOver OnGameOver;
     public static event TurnChanged OnTurnChanged;
     public static event InventoryChanged OnInventoryChanged;
+    public static event Notification OnNotification;
 
     private void Start()
     {
@@ -31,9 +33,14 @@ public class GameEvent: MonoBehaviour
         OnTurnChanged?.Invoke(pState);
     }
     
-    //NOTE(Nighten) It would be cool to also send the modified slot, so that we can make an small animation in the UI
+    //NOTE(Nighten) It would be cool to also send the modified slots, so that we can make an small animation in the UI
     public static void InventoryChangeEvent(KeyValuePair<ItemSO, int>[] pInventory)
     {
         OnInventoryChanged?.Invoke(pInventory);
+    }
+
+    public static void NotificationEvent(string pText)
+    {
+        OnNotification?.Invoke(pText);
     }
 }

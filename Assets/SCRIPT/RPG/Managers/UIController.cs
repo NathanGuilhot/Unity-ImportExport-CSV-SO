@@ -11,6 +11,8 @@ public class UIController : MonoBehaviour
         { GameManager.GAMESTATE.PLAYER_TURN, "YOUR TURN!"},
     };
 
+    public static GameObject MainCanvas;
+
     [SerializeField]
     private TextMeshProUGUI TurnTextObj;
 
@@ -21,6 +23,11 @@ public class UIController : MonoBehaviour
     private void OnDisable()
     {
         GameEvent.OnTurnChanged -= TurnChanged;
+    }
+
+    public void Start()
+    {
+        MainCanvas = GameObject.Find("Canvas");
     }
 
     public void TurnChanged(GameManager.GAMESTATE pState)

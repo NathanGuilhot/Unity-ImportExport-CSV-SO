@@ -4,8 +4,20 @@ using UnityEngine;
 
 public class PlayerInventory : MonoBehaviour
 {
-    const int INVENTORYSLOTS = 4;
-    KeyValuePair<ItemSO, int>[] _InventoryData = new KeyValuePair<ItemSO, int>[INVENTORYSLOTS];
+    public const int INVENTORYSLOTSNUMBER = 6;
+    KeyValuePair<ItemSO, int>[] _InventoryData = new KeyValuePair<ItemSO, int>[INVENTORYSLOTSNUMBER];
+
+    [SerializeField] ItemSO[] StartingInventory;
+
+    private void Start()
+    {
+        GameEvent.InventoryChangeEvent(_InventoryData);
+
+        foreach (ItemSO item in StartingInventory)
+        {
+            AddItem(item);
+        }
+    }
 
     public bool AddItem(ItemSO pItem)
     {
@@ -16,12 +28,16 @@ public class PlayerInventory : MonoBehaviour
     {
         int firstAvailableSlot = -1;
 
-        for (int i = 0; i < INVENTORYSLOTS; i++)
+        for (int i = INVENTORYSLOTSNUMBER - 1; i >= 0; i--)
         {
-            if (IsInventorySlotEmpty(i) || _InventoryData[i].Key == pItem)
+            if (_InventoryData[i].Key == pItem)
             {
                 firstAvailableSlot = i;
                 break;
+            }
+            else if (IsInventorySlotEmpty(i))
+            {
+                firstAvailableSlot = i;
             }
         }
 
@@ -51,26 +67,30 @@ public class PlayerInventory : MonoBehaviour
         }
     }
 
-    public void LogInventory()
+    public bool RemoveItem(int pSlot, int pQuantity)
     {
-        Debug.Log("---------\nInventory:");
-        for (int i = 0; i < INVENTORYSLOTS; i++)
+        Debug.Log($"Trying to remove {pQuantity} items from slot #{pSlot}");
+        if (IsInventorySlotEmpty(pSlot))
         {
-            if (IsInventorySlotEmpty(i))
-            {
-                Debug.Log($"{i} :: Empty");
-            }
-            else { 
-                Debug.Log($"{i} :: {_InventoryData[i].Key.name} > {_InventoryData[i].Value}");
-            }
+            return false;
         }
-        Debug.Log("---------");
+        else if (_InventoryData[pSlot].Value >= pQuantity)
+        {
+            KeyValuePair<ItemSO, int> newSlot = _InventoryData[pSlot].Value == pQuantity ? new KeyValuePair<ItemSO, int>() : new KeyValuePair<ItemSO, int>(_InventoryData[pSlot].Key, _InventoryData[pSlot].Value - pQuantity);
+            _InventoryData[pSlot] = newSlot;
+            GameEvent.InventoryChangeEvent(_InventoryData);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
-    //Should only be used by the manager
-    public KeyValuePair<ItemSO, int>[] GetInventory()
+    public void SwapInventory(int pSlot1, int pSlot2)
     {
-        return _InventoryData;
+        (_InventoryData[pSlot1], _InventoryData[pSlot2]) = (_InventoryData[pSlot2], _InventoryData[pSlot1]);
+        GameEvent.InventoryChangeEvent(_InventoryData);
     }
 
     bool IsInventorySlotEmpty(int pSlot) {
