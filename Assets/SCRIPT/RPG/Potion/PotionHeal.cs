@@ -5,19 +5,27 @@ using UnityEngine;
 public class PotionHeal : MonoBehaviour, IPotionEffect
 {
     int _healAmount;
-    EnemyStat _target;
+    GameObject _FX;
+    IPotionTarget _target;
 
-    public void Init(int pHealAmount)
+    public void Init(ItemSO pPotion)
     {
-        _healAmount = pHealAmount;
+        _healAmount = pPotion.PotionValue;
+        _FX = Instantiate(pPotion.effectParticle, transform);
+        _FX.transform.position += new Vector3(0f, 0f, -1f);
     }
 
     private void Start()
     {
-        _target = GetComponent<EnemyStat>();
+        _target = GetComponent<IPotionTarget>();
         _target.Heal(_healAmount);
-        Destroy(this);
+        Destroy(this, 1f);
     }
-    
-    
+
+    private void OnDestroy()
+    {
+        Destroy(_FX);   
+    }
+
+
 }

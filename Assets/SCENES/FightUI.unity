@@ -240,7 +240,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5124122812378124153, guid: 0b50b2f744c01f04ca389d73b4f2564c, type: 3}
       propertyPath: m_Name
-      value: UIInventorySlot
+      value: EquipmentSlot
       objectReference: {fileID: 0}
     - target: {fileID: 5763353739755423174, guid: 0b50b2f744c01f04ca389d73b4f2564c, type: 3}
       propertyPath: m_Pivot.x

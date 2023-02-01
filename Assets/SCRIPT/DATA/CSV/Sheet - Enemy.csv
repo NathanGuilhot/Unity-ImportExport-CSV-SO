@@ -1,5 +1,5 @@
 id,name_en,PV,Attack,loot,prefab_name
 0,Ogre,60,20,2,ogre
 1,Goblin,30,15,4,goblin
-2,Raccoon,10,5,,raccoon
+2,Raccoon,10,5,0,raccoon
 3,Slime,20,10,3,slime

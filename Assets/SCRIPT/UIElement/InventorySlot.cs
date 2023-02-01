@@ -74,32 +74,9 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     {
         if (!PlayerInventoryDrag.isDragging && HeldObject != null && HeldObject.canUse)
         {
-            //NOTE(Nighten) We need to absolutly move this code elsewhere later
-            //              and use a more elegant method than a switch
-
-            IPotionEffect Potion = null;
-            switch (HeldObject.potionType)
-            {
-                case ItemSO.PotionType.heal:
-                    Potion = (IPotionEffect)EnemySpawner.ActiveEnemy.gameObject.AddComponent<PotionHeal>();
-                    break;
-                case ItemSO.PotionType.love:
-                    Potion = (IPotionEffect)EnemySpawner.ActiveEnemy.gameObject.AddComponent<PotionLove>();
-                    break;
-                case ItemSO.PotionType.enrage:
-                    Potion = (IPotionEffect)EnemySpawner.ActiveEnemy.gameObject.AddComponent<PotionEnrage>();
-                    break;
-                case ItemSO.PotionType.pacifier:
-                    Potion = (IPotionEffect)EnemySpawner.ActiveEnemy.gameObject.AddComponent<PotionPacifier>();
-                    break;
-                default:
-                    break;
-            }
-            Potion?.Init(HeldObject.PotionValue);
-
+            _PotionEffect.Perform(EnemySpawner.ActiveEnemy.gameObject, HeldObject);
 
             GameManager.Inventory.RemoveItem(_slotNumber, 1);
-            //        EnemySpawner.ActiveEnemy.GetDamage((uint)HeldObject.damage);
         }
         
         PlayerInventoryDrag.isDragging = false;

@@ -3,8 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using NightenUtils;
+using static NightenUtils.ChainDelegate;
 
-public class EnemyStat : MonoBehaviour, IEntityStat
+public class EnemyStat : MonoBehaviour, IPotionTarget
 {
     [SerializeField] new string name;
     [field: SerializeField] public int PV { get; set; }
@@ -132,25 +134,10 @@ public class EnemyStat : MonoBehaviour, IEntityStat
 
     //---
     //Events
-    public delegate int _ProcessInt(int pAmount);
-    public delegate int _CheckAttack(int pAmount);
-    public delegate bool _CanAttack();
-    public delegate void _PerformOnAttack();
-
-    public List<_ProcessInt> CheckDamage = new List<_ProcessInt>();
-    public List<_ProcessInt> CheckAttack = new List<_ProcessInt>();
-    public _CanAttack CanAttack = () => true;
-    public _PerformOnAttack PerformOnAttack;
-
-    public int ChainIntDelegate(int pAmount, List<_ProcessInt> pDelegateList)
-    {
-        int result = pAmount;
-        for (int i = 0; i < pDelegateList.Count; i++)
-        {
-            result = pDelegateList[i](result);
-        }
-        return result;
-    }
+    public List<_ProcessInt> CheckDamage { get; set; } = new List<_ProcessInt>();
+    public List<_ProcessInt> CheckAttack { get; set; } = new List<_ProcessInt>();
+    public _CheckCondition CanAttack { get; set; }  = () => true;
+    public Action PerformOnAttack { get; set; }
 }
 
 

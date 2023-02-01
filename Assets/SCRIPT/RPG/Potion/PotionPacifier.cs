@@ -5,11 +5,14 @@ using UnityEngine;
 public class PotionPacifier : MonoBehaviour, IPotionEffect
 {
     int _turnRemaining;
-    EnemyStat _target;
+    GameObject _FX;
+    IPotionTarget _target;
 
-    public void Init(int pPotionValue)
+    public void Init(ItemSO pPotion)
     {
-        _turnRemaining = pPotionValue;
+        _turnRemaining = pPotion.PotionValue;
+        _FX = Instantiate(pPotion.effectParticle, transform);
+        _FX.transform.position += new Vector3(0f, 0f, -1f);
     }
 
     
@@ -17,13 +20,14 @@ public class PotionPacifier : MonoBehaviour, IPotionEffect
     {
         GameEvent.NotificationEvent("The enemy is relaxed!");
         GameEvent.OnTurnChanged += ProcessTurns;
-        _target = GetComponent<EnemyStat>();
+        _target = GetComponent<IPotionTarget>();
         _target.CanAttack += CannotAttack;
     }
     private void OnDestroy()
     {
         GameEvent.OnTurnChanged -= ProcessTurns;
         _target.CanAttack -= CannotAttack;
+        Destroy(_FX);
     }
 
     bool CannotAttack()

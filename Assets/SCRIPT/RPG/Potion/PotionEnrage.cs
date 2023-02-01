@@ -5,22 +5,26 @@ using UnityEngine;
 public class PotionEnrage : MonoBehaviour, IPotionEffect
 {
     int _turnRemaining;
-    EnemyStat _target;
-    public void Init(int pPotionValue)
+    GameObject _FX;
+    IPotionTarget _target;
+    public void Init(ItemSO pPotion)
     {
-        _turnRemaining = pPotionValue;
+        _turnRemaining = pPotion.PotionValue;
+        _FX = Instantiate(pPotion.effectParticle, transform);
+        _FX.transform.position += new Vector3(0f, 0f, -1f);
     }
     void Awake()
     {
         GameEvent.NotificationEvent("The enemy is enraged!");
         GameEvent.OnTurnChanged += ProcessTurns;
-        _target = GetComponent<EnemyStat>();
+        _target = GetComponent<IPotionTarget>();
         _target.PerformOnAttack += HurtWhenAttack;
     }
     private void OnDestroy()
     {
         GameEvent.OnTurnChanged -= ProcessTurns;
         _target.PerformOnAttack -= HurtWhenAttack;
+        Destroy(_FX);
     }
 
     void HurtWhenAttack()

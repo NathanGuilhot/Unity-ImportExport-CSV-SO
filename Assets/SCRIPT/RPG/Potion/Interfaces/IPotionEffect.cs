@@ -1,4 +1,4 @@
 ﻿internal interface IPotionEffect
 {
-    void Init(int pPotionValue);
+    void Init(ItemSO pPotion);
 }

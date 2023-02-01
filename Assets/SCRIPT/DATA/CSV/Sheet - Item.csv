@@ -1,10 +1,10 @@
-id,name_en,description_en,damage,canEquip,canUse,price,targetPlayer,potionType,potionValue,prefab_name
-0,Secret Note...,A note from someone about their missing pet,0,False,False,0,,,,note
-1,Sword,Careful not to cut yourself!,50,True,False,300,,,,sword
-2,Glowing Gem,This gem has some sort of power to it...,0,False,False,600,,,,gem
-3,Emerald,A massive emerald that's worth 500 gp.,0,False,False,500,,,,emerald
-4,Wooden spoon,It's cooking time!,15,True,False,5,,,,spoon
-5,Pine Leaf,This surprisingly tasty potion is actually very healthy; perfect for getting your friends in shape!,0,False,True,100,True,heal,100,potion1
-6,First Kiss,This potion, probably the sweetest of all, will melt your guests' hearts...,0,False,True,50,False,love,2,potion2
-7,Crime of Passion,Warms the heart as well as the mind, this potion knows how to revive the primary instincts of your guests...,0,False,True,150,False,enrage,2,potion3
-8,Blue Moon,A potion full of sparkling energy! Every young witches will love it!,0,False,True,75,False,pacifier,1,potion4
+id,name_en,description_en,damage,canEquip,canUse,price,targetPlayer,potionType,potionValue,prefab_name,effectParticle
+0,Secret Note...,A note from someone about their missing pet,0,FALSE,FALSE,0,,,,note,
+1,Sword,Careful not to cut yourself!,50,TRUE,FALSE,300,,,,sword,
+2,Glowing Gem,This gem has some sort of power to it...,0,FALSE,FALSE,600,,,,gem,
+3,Emerald,A massive emerald that's worth 500 gp.,0,FALSE,FALSE,500,,,,emerald,
+4,Wooden spoon,It's cooking time!,15,TRUE,FALSE,5,,,,spoon,
+5,Pine Leaf,This surprisingly tasty potion is actually very healthy; perfect for getting your friends in shape!,0,FALSE,TRUE,100,TRUE,heal,100,potion1,ParticleHeal
+6,First Kiss,"This potion, probably the sweetest of all, will melt your guests' hearts...",0,FALSE,TRUE,50,FALSE,love,2,potion2,ParticleLove
+7,Crime of Passion,"Warms the heart as well as the mind, this potion knows how to revive the primary instincts of your guests...",0,FALSE,TRUE,150,FALSE,enrage,2,potion3,ParticleEnrage
+8,Blue Moon,A potion full of sparkling energy! Every young witches will love it!,0,FALSE,TRUE,75,FALSE,pacifier,1,potion4,ParticlePacifier

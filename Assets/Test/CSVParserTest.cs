@@ -12,7 +12,7 @@ public class CSVParserTest
     public void SimpleSampleData()
     {
         string[] sampledata = {"Username, Identifier, First name,Last name",
-                            "booker12,9012,Rachel,Booker",
+                            "booker12,9012,\"Rachel, the great\",Booker",
                             "grey07,2070,Laura,Grey"};
         string[] Header = new[] {
             "Username", "Identifier", "First name","Last name"
@@ -22,7 +22,7 @@ public class CSVParserTest
         List<Dictionary<string, string>> expectedData = new List<Dictionary<string, string>>();
         expectedData.Add(new Dictionary<string, string>()
         {
-            {"Username", "booker12"}, {"Identifier", "9012"}, {"First name", "Rachel"}, {"Last name", "Booker"}
+            {"Username", "booker12"}, {"Identifier", "9012"}, {"First name", "Rachel, the great"}, {"Last name", "Booker"}
         });
         expectedData.Add(new Dictionary<string, string>()
         {
@@ -42,7 +42,7 @@ public class CSVParserTest
     public void IsParsingReversible()
     {
         string[] sampledata = {"Username, Identifier, First name,Last name",
-                            "booker12,9012,Rachel,Booker",
+                            "booker12,9012,"+'"'+"Rachel, the great"+'"'+",Booker", //Test here the support for double quotes
                             "grey07,2070,Laura,Grey"};
         string[] Header = new[] {
             "Username", "Identifier", "First name","Last name"

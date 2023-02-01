@@ -25,4 +25,5 @@ MonoBehaviour:
   potionType: 2
   PotionValue: 2
   prefab: {fileID: 647251642628640293, guid: 0997673039f3caf44b2656140d4fc3d4, type: 3}
+  effectParticle: {fileID: 9108247770172197573, guid: 3ac12bead33b0274bb646d677f618958, type: 3}
   sprite: {fileID: 21300000, guid: a1cec6b0ddcfd7e42b14337017c08f1f, type: 3}

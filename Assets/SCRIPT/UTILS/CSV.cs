@@ -79,7 +79,9 @@ public static class CSV
             string row = "";
             foreach (KeyValuePair<string,string> header in pData[0])
             {
-                row = $"{row}{pData[i][header.Key]},";
+                string entry = pData[i][header.Key];
+                entry = (entry.Contains(",")) ? '"'+entry+'"' : entry; //Add quotes if a comma is in the text
+                row = $"{row}{entry},";
             }
             DataList.Add(row.Remove(row.Length - 1, 1));
         }

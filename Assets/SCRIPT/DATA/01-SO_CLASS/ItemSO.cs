@@ -21,6 +21,7 @@ public class ItemSO : ScriptableObject, IDataObject
     public int PotionValue;
 
     public GameObject prefab;
+    public GameObject effectParticle;
     public Sprite sprite;
 
     public bool isValid { get; set; } = false;
@@ -29,6 +30,7 @@ public class ItemSO : ScriptableObject, IDataObject
     private List<string> _values = new List<string>();
 
     const string PREFAB_PATH = "Assets/PREFAB/ITEMS/";
+    const string PARTICLE_PATH = "Assets/PREFAB/FX/Particles/";
 
     public enum PotionType
     {
@@ -82,6 +84,8 @@ public class ItemSO : ScriptableObject, IDataObject
 
         this.prefab = SOFileManagement.LoadAssetFromFile<GameObject>(PREFAB_PATH, pData["prefab_name"] + ".prefab");
         this.sprite = this.prefab.GetComponent<SpriteRenderer>().sprite;
+        if (pData["effectParticle"] != "")
+            this.effectParticle = SOFileManagement.LoadAssetFromFile<GameObject>(PARTICLE_PATH, pData["effectParticle"] + ".prefab");
 
         this.isValid = true;
 
@@ -105,16 +109,20 @@ public class ItemSO : ScriptableObject, IDataObject
         SOData["targetPlayer"] = "";
         SOData["potionType"] = "";
         SOData["potionValue"] = "";
+        SOData["effectParticle"] = "";
 
         if (this.isPotion)
         {
             SOData["targetPlayer"] = this.targetPlayer.ToString();
             SOData["potionType"] = _potionTypeMap[this.potionType];
             SOData["potionValue"] = this.PotionValue.ToString() ;
+            SOData["effectParticle"] = this.effectParticle != null ? this.effectParticle.name : "";
         }
 
         SOData["prefab_name"] = this.prefab != null ? this.prefab.name : "";
 
         return SOData;
     }
+
+    
 }

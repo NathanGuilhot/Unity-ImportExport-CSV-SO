@@ -5,23 +5,27 @@ using UnityEngine;
 public class PotionLove : MonoBehaviour, IPotionEffect
 {
     int _turnRemaining;
-    EnemyStat _target;
+    GameObject _FX;
+    IPotionTarget _target;
 
-    public void Init(int pPotionValue)
+    public void Init(ItemSO pPotion)
     {
-        _turnRemaining = pPotionValue;
+        _turnRemaining = pPotion.PotionValue;
+        _FX = Instantiate(pPotion.effectParticle, transform);
+        _FX.transform.position += new Vector3(0f, 0f, -1f);
     }
 
     void Awake()
     {
-        GameEvent.NotificationEvent("The enemy don't want to hurt you!");
+        GameEvent.NotificationEvent("The enemy has a crush on you!");
         GameEvent.OnTurnChanged += ProcessTurns;
-        _target = GetComponent<EnemyStat>();
+        _target = GetComponent<IPotionTarget>();
         _target.CheckAttack.Add(ReduceAttack);
     }
     private void OnDestroy()
     {
         GameEvent.OnTurnChanged -= ProcessTurns;
+        Destroy(_FX);
         _target.CheckAttack.Remove(ReduceAttack);
     }
 
