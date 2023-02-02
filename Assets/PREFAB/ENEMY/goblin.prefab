@@ -118,6 +118,7 @@ MonoBehaviour:
   <Attack>k__BackingField: 0
   loot: {fileID: 0}
   _lifeBar: {fileID: 2268812951105681357}
+  _anim: {fileID: 9091565507493903497}
 --- !u!95 &9091565507493903497
 Animator:
   serializedVersion: 4

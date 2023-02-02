@@ -6,18 +6,18 @@ using UnityEngine;
 public class MinimalSO : ScriptableObject, IDataObject
 {
     [field: SerializeField]
-    public int id { get; set; }
+    public int id { get; private set; }
     
     //NOTE(Nighten) Add your object field here
 
     [field: SerializeField]
-    public bool isValid { get; set; } = false;
+    public bool isValid { get; private set; } = false;
     
     //NOTE(Nighten) Those Lists are used to serialize the input dictionary
     private List<string> _keys = new List<string>();
     private List<string> _values = new List<string>();
 
-    public void init(Dictionary<string, string> pData)
+    public void Init(Dictionary<string, string> pData)
     {
         //https://docs.unity3d.com/ScriptReference/ISerializationCallbackReceiver.html
         foreach (var kvp in pData)

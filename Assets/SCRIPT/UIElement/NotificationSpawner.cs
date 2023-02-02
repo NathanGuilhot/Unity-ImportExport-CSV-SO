@@ -6,14 +6,8 @@ public class NotificationSpawner : MonoBehaviour
 {
     [SerializeField] Notification _notificatioPrefab;
 
-    private void OnEnable()
-    {
-        GameEvent.OnNotification += FireNotification;
-    }
-    private void OnDisable()
-    {
-        GameEvent.OnNotification -= FireNotification;
-    }
+    private void OnEnable() => GameEvent.OnNotification += FireNotification;
+    private void OnDisable() => GameEvent.OnNotification -= FireNotification;
 
     // Update is called once per frame
     void FireNotification(string pText)

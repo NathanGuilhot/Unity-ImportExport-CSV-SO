@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerInventory : MonoBehaviour
+public class PlayerInventory : MonoBehaviour, IInventory
 {
     public const int INVENTORYSLOTSNUMBER = 6;
     KeyValuePair<ItemSO, int>[] _InventoryData = new KeyValuePair<ItemSO, int>[INVENTORYSLOTSNUMBER];
@@ -13,8 +13,9 @@ public class PlayerInventory : MonoBehaviour
     {
         GameEvent.InventoryChangeEvent(_InventoryData);
 
-        foreach (ItemSO item in StartingInventory)
+        for (int i = 0; i < StartingInventory.Length; i++)
         {
+            ItemSO item = StartingInventory[i];
             AddItem(item);
         }
     }

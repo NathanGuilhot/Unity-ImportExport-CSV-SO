@@ -8,19 +8,8 @@ public class EnemySpawner : MonoBehaviour
     EnemySO[] Enemies;
     public static EnemyStat ActiveEnemy;
 
-    private void OnEnable()
-    {
-        GameEvent.OnEncounter += SpawnMonster;
-    }
-    private void OnDisable()
-    {
-        GameEvent.OnEncounter -= SpawnMonster;
-    }
-
-    private void Update()
-    {
-        
-    }
+    private void OnEnable() => GameEvent.OnEncounter += SpawnMonster;
+    private void OnDisable() => GameEvent.OnEncounter -= SpawnMonster;
 
     void SpawnMonster()
     {
@@ -28,8 +17,7 @@ public class EnemySpawner : MonoBehaviour
         {
             EnemySO RandomEnemy = Enemies[Random.Range(0, Enemies.Length)];
             ActiveEnemy = Instantiate(RandomEnemy.prefab, transform).GetComponent<EnemyStat>();
-            ActiveEnemy.Init(RandomEnemy);
-            ActiveEnemy.OnDestroyed = OnMonsterDestroy;
+            ActiveEnemy.Init(RandomEnemy, OnMonsterDestroy);
         }
     }
 

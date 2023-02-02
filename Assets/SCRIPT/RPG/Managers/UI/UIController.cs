@@ -5,10 +5,10 @@ using UnityEngine;
 
 public class UIController : MonoBehaviour
 {
-    Dictionary<GameManager.GAMESTATE, string> TurnMessage = new Dictionary<GameManager.GAMESTATE, string>()
+    Dictionary<GAMESTATE, string> TurnMessage = new Dictionary<GAMESTATE, string>()
     {
-        { GameManager.GAMESTATE.ENEMY_TURN, "ENEMY'S TURN!" },
-        { GameManager.GAMESTATE.PLAYER_TURN, "YOUR TURN!"},
+        { GAMESTATE.ENEMY_TURN, "ENEMY'S TURN!" },
+        { GAMESTATE.PLAYER_TURN, "YOUR TURN!"},
     };
 
     public static GameObject MainCanvas;
@@ -30,7 +30,7 @@ public class UIController : MonoBehaviour
         MainCanvas = GameObject.Find("Canvas");
     }
 
-    public void TurnChanged(GameManager.GAMESTATE pState)
+    public void TurnChanged(GAMESTATE pState)
     {
         TurnTextObj.text = TurnMessage[pState];
     }

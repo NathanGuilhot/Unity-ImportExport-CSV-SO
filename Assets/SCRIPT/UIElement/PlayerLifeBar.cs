@@ -6,11 +6,11 @@ public class PlayerLifeBar : LifeBar
 {
     private void OnEnable()
     {
-        PlayerStat.onUpdateLife += UpdateLife;
+        PlayerEvent.onUpdateLife += UpdateLife;
     }
     private void OnDisable()
     {
-        PlayerStat.onUpdateLife -= UpdateLife;
+        PlayerEvent.onUpdateLife -= UpdateLife;
     }
 
     void UpdateLife(int pPV, int pPVMax)

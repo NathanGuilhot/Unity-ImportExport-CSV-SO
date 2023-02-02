@@ -74,7 +74,7 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     {
         if (!PlayerInventoryDrag.isDragging && HeldObject != null && HeldObject.canUse)
         {
-            _PotionEffect.Perform(EnemySpawner.ActiveEnemy.gameObject, HeldObject);
+            _PotionEffect.Perform(EnemySpawner.ActiveEnemy, HeldObject);
 
             GameManager.Inventory.RemoveItem(_slotNumber, 1);
         }

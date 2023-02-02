@@ -7,10 +7,11 @@ using System;
 public interface IPotionTarget
 {
     _CheckCondition CanAttack { get; set; }
-    List<_ProcessInt> CheckAttack { get; set; }
-    List<_ProcessInt> CheckDamage { get; set; }
+    List<Func<int,int>> CheckAttack { get; set; }
+    List<Func<int, int>> CheckDamage { get; set; }
     Action PerformOnAttack { get; set; }
+    GameObject gameObject {get;}
 
     void Heal(int pAmount);
-    void GetDamage(uint pAmount);
+    void GetDamage(int pAmount);
 }

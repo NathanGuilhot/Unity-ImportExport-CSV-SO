@@ -7,7 +7,7 @@ using UnityEngine;
 public class ItemSO : ScriptableObject, IDataObject
 {
     [field:SerializeField]
-    public int id { get; set; }
+    public int id { get; private set; }
     public new string name;
     public string description;
     public int price;
@@ -24,7 +24,7 @@ public class ItemSO : ScriptableObject, IDataObject
     public GameObject effectParticle;
     public Sprite sprite;
 
-    public bool isValid { get; set; } = false;
+    public bool isValid { get; private set; } = false;
 
     private List<string> _keys = new List<string>();
     private List<string> _values = new List<string>();
@@ -40,17 +40,19 @@ public class ItemSO : ScriptableObject, IDataObject
         pacifier
     }
 
-    static Dictionary<string, PotionType> _potionNameMap = new Dictionary<string, PotionType>
+    static Dictionary<string, PotionType> _potionNameMap =
+        new Dictionary<string, PotionType>
     {
         {"heal", PotionType.heal },
         {"love", PotionType.love },
         {"enrage", PotionType.enrage },
         {"pacifier", PotionType.pacifier },
     };
-    static Dictionary<PotionType, string> _potionTypeMap = _potionNameMap.ToDictionary((i) => i.Value, (i) => i.Key);
+    static Dictionary<PotionType, string> _potionTypeMap =
+        _potionNameMap.ToDictionary((i) => i.Value, (i) => i.Key);
 
 
-    public void init(Dictionary<string, string> pData)
+    public void Init(Dictionary<string, string> pData)
     {
         //https://docs.unity3d.com/ScriptReference/ISerializationCallbackReceiver.html
         foreach (var kvp in pData)

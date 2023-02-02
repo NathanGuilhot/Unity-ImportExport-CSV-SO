@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class PlayerAttack : MonoBehaviour
+public class PlayerEquip : MonoBehaviour
 {
     ItemSO _equipedItem;
     [SerializeField] int DEFAULTATTACK = 10;
 
     private void OnEnable()
     {
-        //Subscribe to event : equipement slot filled
         EquipmentSlot.OnUpdateEquipment += UpdateEquipment;
     }
     private void OnDisable()
@@ -28,17 +27,8 @@ public class PlayerAttack : MonoBehaviour
         _equipedItem = pItem;
     }
 
-    private void Update()
+    public int getBaseAttack()
     {
-        //_TargetEnemy = EnemySpawner.ActiveEnemy.GetComponent<EnemyStat>();
-
-        if (GameManager.GameState == GameManager.GAMESTATE.PLAYER_TURN) { 
-            if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
-            {
-                EnemySpawner.ActiveEnemy.GetDamage((uint)((_equipedItem!=null) ? _equipedItem.damage : DEFAULTATTACK));
-                GameManager.TurnEnded();
-            }
-                
-        }
+        return (_equipedItem != null) ? _equipedItem.damage : DEFAULTATTACK;
     }
 }

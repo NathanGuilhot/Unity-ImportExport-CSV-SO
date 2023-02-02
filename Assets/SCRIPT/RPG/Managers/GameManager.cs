@@ -7,16 +7,10 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     public static IFXController FX { get; private set; }
-    public static PlayerInventory Inventory { get; private set; }
-    public static PlayerStat Player { get; private set; }
+    public static IInventory Inventory { get; private set; }
+    public static IPotionTarget Player { get; private set; }
 
-    public enum GAMESTATE
-    {
-        PLAYER_TURN,
-        ENEMY_TURN
-    }
-
-    public static GAMESTATE GameState { get; private set; }
+    public static GAMESTATE GameState { get; private set; } = GAMESTATE.PLAYER_TURN;
 
     private void Awake()
     {
@@ -34,8 +28,10 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         FX = GetComponent<IFXController>();
-        Inventory = GetComponent<PlayerInventory>();
-        Player = GetComponent<PlayerStat>();
+        Inventory = GetComponent<IInventory>();
+        Player = GetComponent<IPotionTarget>();
+
+        GameEvent.EndTurnEvent(GameState);
     }
     public static void TurnEnded()
     {
