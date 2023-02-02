@@ -56,7 +56,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b3fda93f8f21acc4cb7bdbefbf3893c5, type: 2}
+  - {fileID: 2100000, guid: f5134bc81d8f55e458746a1db5ad8376, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -113,12 +113,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00cc8bad337ecba46a86ac3fef1ce89f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: 
-  <PV>k__BackingField: 0
-  <Attack>k__BackingField: 0
-  loot: {fileID: 0}
+  PV: 0
+  Attack: 0
+  _loot: {fileID: 0}
   _lifeBar: {fileID: 2268812951105681357}
   _anim: {fileID: 9091565507493903497}
+  _ImageRenderer: {fileID: 8857398709407426779}
 --- !u!95 &9091565507493903497
 Animator:
   serializedVersion: 4

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,24 +7,19 @@ public class _PotionEffect : MonoBehaviour
 {
     public static void Perform(IPotionTarget pTarget, ItemSO pPotion)
     {
-        IPotionEffect Potion = null;
-        switch (pPotion.potionType)
+
+        Dictionary<ItemSO.PotionType, Type> PotionMap = new Dictionary<ItemSO.PotionType, Type>()
         {
-            case ItemSO.PotionType.heal:
-                Potion = (IPotionEffect)pTarget.gameObject.AddComponent<PotionHeal>();
-                break;
-            case ItemSO.PotionType.love:
-                Potion = (IPotionEffect)pTarget.gameObject.AddComponent<PotionLove>();
-                break;
-            case ItemSO.PotionType.enrage:
-                Potion = (IPotionEffect)pTarget.gameObject.AddComponent<PotionEnrage>();
-                break;
-            case ItemSO.PotionType.pacifier:
-                Potion = (IPotionEffect)pTarget.gameObject.AddComponent<PotionPacifier>();
-                break;
-            default:
-                break;
-        }
+            {ItemSO.PotionType.heal, typeof(PotionHeal)},
+            {ItemSO.PotionType.love, typeof(PotionLove)},
+            {ItemSO.PotionType.enrage, typeof(PotionEnrage)},
+            {ItemSO.PotionType.pacifier, typeof(PotionPacifier)},
+        };
+
+        IPotionEffect Potion = (IPotionEffect)pTarget.gameObject.AddComponent(
+                PotionMap[pPotion.potionType]
+            );
+        
         Potion?.Init(pPotion, pTarget);
     }
 }

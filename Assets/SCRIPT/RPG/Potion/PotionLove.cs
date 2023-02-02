@@ -9,7 +9,7 @@ using UnityEngine;
 public class PotionLove : MonoBehaviour, IPotionEffect
 {
     int _turnRemaining;
-    GameObject _FX;
+    Animator _FX;
     IPotionTarget _target;
 
     public void Init(ItemSO pPotion, IPotionTarget pTarget)
@@ -18,26 +18,28 @@ public class PotionLove : MonoBehaviour, IPotionEffect
 
         _target = pTarget;
         _target.CheckAttack.Add(ReduceAttack);
+        if (GameManager.GameState == _target.ActiveState)
+            _turnRemaining -= 1;
 
         SpawnFX(pPotion);
+
+        GameEvent.NotificationEvent($"The {_target.name} is in love!");
+        GameEvent.OnTurnChanged += ProcessTurns;
     }
 
     private void SpawnFX(ItemSO pPotion)
     {
-        _FX = Instantiate(pPotion.effectParticle, transform);
+        _FX = Instantiate(pPotion.effectParticle, transform).GetComponent<Animator>();
         _FX.transform.position += new Vector3(0f, 0f, -1f);
     }
-
-    void Awake()
-    {
-        GameEvent.NotificationEvent("The enemy has a crush on you!");
-        GameEvent.OnTurnChanged += ProcessTurns;
-    }
+    
     private void OnDestroy()
     {
         GameEvent.OnTurnChanged -= ProcessTurns;
-        Destroy(_FX);
         _target.CheckAttack.Remove(ReduceAttack);
+        
+        _FX.Play("FadeOut");
+        Destroy(_FX.gameObject, 1f);
     }
 
     int ReduceAttack(int pAttack)
@@ -47,7 +49,7 @@ public class PotionLove : MonoBehaviour, IPotionEffect
 
     void ProcessTurns(GAMESTATE pState)
     {
-        if (pState == GAMESTATE.ENEMY_TURN)
+        if (pState == _target.ActiveState)
         {
             _turnRemaining -= 1;
             if (_turnRemaining < 0)

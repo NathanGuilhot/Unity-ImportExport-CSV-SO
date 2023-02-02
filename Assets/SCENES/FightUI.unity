@@ -352,7 +352,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _slotNumber: -1
-  _amount: 0
+  Amount: 0
   _AmountDisplay: {fileID: 1417309342}
   _ImageRenderer: {fileID: 213598218}
   _blankImage: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}

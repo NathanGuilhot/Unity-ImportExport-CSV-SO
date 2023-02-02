@@ -21,7 +21,7 @@ MonoBehaviour:
   canUse: 1
   damage: 0
   isPotion: 1
-  targetPlayer: 0
+  targetPlayer: 1
   potionType: 1
   PotionValue: 2
   prefab: {fileID: 647251642628640293, guid: 3be825fdccd6a9c47842d78e80d6bb68, type: 3}

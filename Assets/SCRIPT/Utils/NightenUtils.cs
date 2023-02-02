@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace NightenUtils
 {
-    public delegate bool _CheckCondition();
     public static class ChainDel
     {
         public static T ChainDelegate<T>(T pAmount, List<Func<T, T>> pDelegateList)

@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using NightenUtils;
 using static NightenUtils.ChainDel;
 
 /// Dependencies:
@@ -12,11 +11,12 @@ using static NightenUtils.ChainDel;
 
 public class EnemyStat : MonoBehaviour, IPotionTarget
 {
-    [SerializeField] new string name;
+    public new string name { get; private set; }
     [field: SerializeField] int PV;
     int PV_Max;
     [field: SerializeField] int Attack;
     [SerializeField] ItemSO _loot;
+    public GAMESTATE ActiveState { get; } = GAMESTATE.ENEMY_TURN;
 
     [SerializeField] LifeBar _lifeBar;
     [SerializeField] Animator _anim;
@@ -25,11 +25,14 @@ public class EnemyStat : MonoBehaviour, IPotionTarget
     private bool inAction = false;
     Action<GameObject> _OnDestroyed;
 
+    [SerializeField] Renderer _ImageRenderer;
+
     //Events
     public List<Func<int, int>> CheckDamage { get; set; } = new List<Func<int, int>>();
     public List<Func<int, int>> CheckAttack { get; set; } = new List<Func<int, int>>();
-    public _CheckCondition CanAttack { get; set; } = () => true;
+    public Func<bool> CanAttack { get; set; } = () => true;
     public Action PerformOnAttack { get; set; }
+
 
     public void Init(EnemySO pData, Action<GameObject> pOnDestroyed)
     {
@@ -46,6 +49,7 @@ public class EnemyStat : MonoBehaviour, IPotionTarget
     {
         pAmount = ChainDelegate<int>(pAmount, CheckDamage);
 
+        StartCoroutine(DamageEffect(pAmount));
         GameManager.FX.DisplayDamage(pAmount, transform.position + new Vector3(4f, 0f, -0.5f));
 
         PV = Mathf.Max(PV - pAmount, 0);
@@ -62,23 +66,30 @@ public class EnemyStat : MonoBehaviour, IPotionTarget
         }
     }
 
-    public void PerformAttack()
+    IEnumerator DamageEffect(int pAmount)
     {
-        inAction = true;
-        Debug.Log("Enemy's turn!");
-        StartCoroutine(OnAttack());
+        SetShaderHit(true);
+        yield return new WaitForSeconds((float)pAmount / 100f);
+        SetShaderHit(false);
     }
+
 
     private void Update()
     {
         if (isAlive && !inAction)
         {
-            if (GameManager.GameState == GAMESTATE.ENEMY_TURN)
+            if (GameManager.GameState == ActiveState)
             {
                 PerformAttack();
             }
 
         }
+    }
+    public void PerformAttack()
+    {
+        inAction = true;
+        Debug.Log("Enemy's turn!");
+        StartCoroutine(OnAttack());
     }
 
     private IEnumerator OnAttack()
@@ -90,17 +101,20 @@ public class EnemyStat : MonoBehaviour, IPotionTarget
             yield break;
         }
         _anim.SetBool("attack", true);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.4f);
         //NOTE(Nighten) We switch this bool quickly so we can be sure the animation is played at exit time of the spawn
         //              Playing the animation directly doesn't allow that
         _anim.SetBool("attack", false);
 
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.1f);
         PerformOnAttack?.Invoke();
         GameManager.Player.GetDamage(ChainDelegate<int>(Attack, CheckAttack));
 
-        yield return new WaitForSeconds(0.3f);
-        OnAttackEnded();
+        if (isAlive) { 
+            yield return new WaitForSeconds(0.3f);
+            OnAttackEnded();
+        }
+        
     }
 
     public void OnAttackEnded()
@@ -135,10 +149,11 @@ public class EnemyStat : MonoBehaviour, IPotionTarget
         PV = Mathf.Min(PV + pAmount, PV_Max);
         _lifeBar.SetValue((float)PV / (float)PV_Max);
 
-        GameEvent.NotificationEvent("The enemy is healing!");
+        GameEvent.NotificationEvent($"The {name} is healing!");
+    }
+
+    private void SetShaderHit(bool pHit)
+    {
+        _ImageRenderer.material.SetFloat("_Hit", pHit ? 1 : 0);
     }
 }
-
-
-
-

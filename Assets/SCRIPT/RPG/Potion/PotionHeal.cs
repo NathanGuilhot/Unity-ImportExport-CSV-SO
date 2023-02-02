@@ -8,7 +8,7 @@ using UnityEngine;
 public class PotionHeal : MonoBehaviour, IPotionEffect
 {
     int _healAmount;
-    GameObject _FX;
+    Animator _FX;
     IPotionTarget _target;
 
     public void Init(ItemSO pPotion, IPotionTarget pTarget)
@@ -18,7 +18,7 @@ public class PotionHeal : MonoBehaviour, IPotionEffect
         _target = pTarget;
         _target.Heal(_healAmount);
         
-        _FX = Instantiate(pPotion.effectParticle, transform);
+        _FX = Instantiate(pPotion.effectParticle, transform).GetComponent<Animator>();
         _FX.transform.position += new Vector3(0f, 0f, -1f);
     }
 
@@ -29,7 +29,8 @@ public class PotionHeal : MonoBehaviour, IPotionEffect
 
     private void OnDestroy()
     {
-        Destroy(_FX);   
+        _FX.Play("FadeOut");
+        Destroy(_FX.gameObject, 1f);   
     }
 
 
