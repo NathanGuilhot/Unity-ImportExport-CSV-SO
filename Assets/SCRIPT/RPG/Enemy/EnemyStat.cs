@@ -33,6 +33,21 @@ public class EnemyStat : MonoBehaviour, IPotionTarget
     public Func<bool> CanAttack { get; set; } = () => true;
     public Action PerformOnAttack { get; set; }
 
+    private void OnEnable()
+    {
+        GameEvent.OnEnemyReceivePotion += ReceivePotion;
+        GameEvent.OnEnemyAttacked += GetDamage;
+    }
+
+    private void OnDisable()
+    {
+        GameEvent.OnEnemyReceivePotion -= ReceivePotion;
+        GameEvent.OnEnemyAttacked -= GetDamage;
+    }
+    private void ReceivePotion(ItemSO pPotion)
+    {
+        _PotionEffect.Perform(this, pPotion);
+    }
 
     public void Init(EnemySO pData, Action<GameObject> pOnDestroyed)
     {
@@ -108,7 +123,8 @@ public class EnemyStat : MonoBehaviour, IPotionTarget
 
         yield return new WaitForSeconds(0.1f);
         PerformOnAttack?.Invoke();
-        GameManager.Player.GetDamage(ChainDelegate<int>(Attack, CheckAttack));
+        //GameManager.Player.GetDamage(ChainDelegate<int>(Attack, CheckAttack));
+        GameEvent.AttackPlayer(ChainDelegate<int>(Attack, CheckAttack));
 
         if (isAlive) { 
             yield return new WaitForSeconds(0.3f);

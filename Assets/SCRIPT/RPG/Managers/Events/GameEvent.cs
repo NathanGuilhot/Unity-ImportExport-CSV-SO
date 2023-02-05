@@ -16,6 +16,12 @@ public class GameEvent: MonoBehaviour
     public static event Action<KeyValuePair<ItemSO, int>[]> OnInventoryChanged;
     public static event Action<string> OnNotification;
 
+    public static event Action<ItemSO> OnEnemyReceivePotion; //NOTE(Nighten) In the future, we would need to also pass an id for the target enemy
+    public static event Action<ItemSO> OnPlayerReceivePotion;
+
+    public static event Action<int> OnPlayerAttacked;
+    public static event Action<int> OnEnemyAttacked;
+
     private void Start()
     {
         OnGameStart?.Invoke();
@@ -32,4 +38,21 @@ public class GameEvent: MonoBehaviour
 
     public static void NotificationEvent(string pText)
         => OnNotification?.Invoke(pText);
+
+    public static void ThrowPotionEvent(ItemSO pPotion, bool pTargetIsThePlayer)
+    {
+        if (pTargetIsThePlayer)
+            OnPlayerReceivePotion?.Invoke(pPotion);
+        else
+            OnEnemyReceivePotion?.Invoke(pPotion);
+    }
+
+    public static void AttackPlayer(int pDamage)
+    {
+        OnPlayerAttacked?.Invoke(pDamage);
+    }
+    public static void AttackEnemy(int pDamage)
+    {
+        OnEnemyAttacked?.Invoke(pDamage);
+    }
 }

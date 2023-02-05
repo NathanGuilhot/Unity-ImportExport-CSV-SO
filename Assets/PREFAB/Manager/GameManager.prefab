@@ -51,6 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c304a5b826fd18e468b544131b0d75de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  state: {fileID: 11400000, guid: a6d65d90f84e53f4086733a965873874, type: 2}
 --- !u!114 &4790660909383010306
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -76,6 +77,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DamageFXText: {fileID: 6341742036305572196, guid: 4657a44c30d02f345b674b3522187a17, type: 3}
+  SlashFX: {fileID: 2521988045568304770, guid: c96bc90d40263d147ba8094171068ad8, type: 3}
 --- !u!114 &4790660909383010558
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -139,6 +141,7 @@ MonoBehaviour:
   PV: 1000
   PV_Max: 1000
   _equipment: {fileID: 4790660909383010555}
+  _state: {fileID: 0}
 --- !u!114 &4790660909383010555
 MonoBehaviour:
   m_ObjectHideFlags: 0

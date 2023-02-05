@@ -509,10 +509,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4790660909383010305, guid: 68383c170b3b55c45b81d1203809a1a8, type: 3}
-      propertyPath: SlashFX
+    - target: {fileID: 4790660909383010304, guid: 68383c170b3b55c45b81d1203809a1a8, type: 3}
+      propertyPath: state
       value: 
-      objectReference: {fileID: 2521988045568304770, guid: c96bc90d40263d147ba8094171068ad8, type: 3}
+      objectReference: {fileID: 11400000, guid: a6d65d90f84e53f4086733a965873874, type: 2}
     - target: {fileID: 4790660909383010307, guid: 68383c170b3b55c45b81d1203809a1a8, type: 3}
       propertyPath: m_RootOrder
       value: 2

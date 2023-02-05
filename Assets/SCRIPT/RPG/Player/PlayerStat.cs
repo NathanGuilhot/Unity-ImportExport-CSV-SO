@@ -21,7 +21,21 @@ public class PlayerStat : MonoBehaviour, IPotionTarget
     public Func<bool> CanAttack { get; set; } = () => true;
     public Action PerformOnAttack { get; set; }
 
+    private void OnEnable()
+    {
+        GameEvent.OnPlayerReceivePotion += ReceivePotion;
+        GameEvent.OnPlayerAttacked += GetDamage;
+    }
 
+    private void OnDisable()
+    {
+        GameEvent.OnPlayerReceivePotion -= ReceivePotion;
+        GameEvent.OnPlayerAttacked -= GetDamage;
+    }
+    private void ReceivePotion(ItemSO pPotion)
+    {
+        _PotionEffect.Perform(this, pPotion);
+    }
 
     public void GetDamage(int pAmount)
     {
@@ -72,7 +86,8 @@ public class PlayerStat : MonoBehaviour, IPotionTarget
 
             PerformOnAttack?.Invoke();
             int AttackAmount = ChainDelegate<int>(_equipment.getBaseAttack(), CheckAttack);
-            EnemySpawner.ActiveEnemy.GetDamage(AttackAmount);
+            //EnemySpawner.ActiveEnemy.GetDamage(AttackAmount);
+            GameEvent.AttackEnemy(AttackAmount);
         }
         yield return new WaitForSeconds(0.5f);
         _inAction = false;

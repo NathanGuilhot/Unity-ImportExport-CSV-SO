@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     public static IFXController FX { get; private set; }
     public static IInventory Inventory { get; private set; }
-    public static PlayerStat Player { get; private set; }
+    //public static PlayerStat Player { get; private set; }
 
     public static GAMESTATE GameState { get; private set; } = GAMESTATE.PLAYER_TURN;
 
@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
     {
         FX = GetComponent<IFXController>();
         Inventory = GetComponent<IInventory>();
-        Player = GetComponent<PlayerStat>();
+        //Player = GetComponent<PlayerStat>();
 
         GameEvent.EndTurnEvent(GameState);
     }

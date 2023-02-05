@@ -62,8 +62,11 @@ public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     {
         if (!PlayerInventoryDrag.isDragging && HeldObject != null && HeldObject.canUse)
         {
-            _PotionEffect.Perform(HeldObject.targetPlayer ? GameManager.Player : EnemySpawner.ActiveEnemy,
-                                HeldObject);
+            GameEvent.ThrowPotionEvent(HeldObject, HeldObject.targetPlayer);
+            
+            //NOTE(Nighten) This is the old way of doing this; now we pass by an event:
+            //  _PotionEffect.Perform(HeldObject.targetPlayer ? GameManager.Player : EnemySpawner.ActiveEnemy, HeldObject);
+            
             RemoveItem(1);
         }
         PlayerInventoryDrag.isDragging = false;
