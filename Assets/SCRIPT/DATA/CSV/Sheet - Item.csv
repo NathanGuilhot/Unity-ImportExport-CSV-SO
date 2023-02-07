@@ -1,6 +1,11 @@
-id,name_en,name_fr,description_en,description_fr,cost,canEquip,damage,prefab_name
-0,Secret Note...,Note,A note from someone about their missing pet,Une note de quelqu'un sur la perte de son animal,0,False,0,note
-1,Sword,Épée,Careful not to cut yourself!,Attention à pas te couper !,100,True,20,sword
-2,Glowing Gem,Gemme brillante,This gem has some sort of power to it...,Ce joyau a une sorte de pouvoir...,700,False,0,gem
-3,Emerald,Émeraude,A massive emerald that's worth 500 gp.,Une émeraude massive qui vaut 500 po,500,False,0,emerald
-4,Wooden spoon,Cuillère en bois,It's cooking time!,C'est l'heure de la soupe!,2,True,3,spoon
+﻿id,name_en,description_en,damage,canEquip,canUse,price,targetPlayer,potionType,potionValue,prefab_name,effectParticle
+0,Secret Note...,A note from someone about their missing pet,0,FALSE,FALSE,0,,,,note,
+1,Sword,Careful not to cut yourself!,50,TRUE,FALSE,300,,,,sword,
+2,Glowing Gem,This gem has some sort of power to it...,0,FALSE,FALSE,600,,,,gem,
+3,Emerald,A massive emerald that's worth 500 gp.,0,FALSE,FALSE,500,,,,emerald,
+4,Wooden spoon,It's cooking time!,15,TRUE,FALSE,5,,,,spoon,
+5,Pine Leaf,This surprisingly tasty potion is actually very healthy; perfect for getting your friends in shape!,100,FALSE,TRUE,100,TRUE,heal,0,potion1,ParticleHeal
+6,First Kiss,"This potion, probably the sweetest of all, will melt your guests' hearts...",0,FALSE,TRUE,50,FALSE,love,2,potion2,ParticleLove
+7,Crime of Passion,"Warms the heart as well as the mind, this potion knows how to revive the primary instincts of your guests...",20,FALSE,TRUE,150,FALSE,enrage,2,potion3,ParticleEnrage
+8,Blue Moon,A potion full of sparkling energy! Every young witches will love it!,0,FALSE,TRUE,75,FALSE,pacifier,1,potion4,ParticlePacifier
+9,Poison,Perform damage over time,10,FALSE,TRUE,75,FALSE,poison,3,poison,ParticlePoison

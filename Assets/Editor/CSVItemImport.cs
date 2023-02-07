@@ -31,7 +31,7 @@ public static class CSVItemImport
             //NOTE(Nighten) It is not possible to call a constructor with SO.CreateInstance()
             //Therefore, we need to create an init function to initialize our data
             //The object is responsible for how it will handle the Dictionary
-            item.init(ItemData);
+            item.Init(ItemData);
 
             //NOTE(Nighten) Each object is also responsible for the way it treat wrong data
             //For example, we might want to check if the row is valid in the init() function

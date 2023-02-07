@@ -15,7 +15,14 @@ MonoBehaviour:
   <id>k__BackingField: 1
   name: Sword
   description: Careful not to cut yourself!
-  cost: 100
+  price: 300
   canEquip: 1
-  damage: 20
-  prefab: {fileID: 57205943026770581, guid: 6dab3f42f9ddc624e8a3d61aace7b322, type: 3}
+  canUse: 0
+  damage: 50
+  isPotion: 0
+  targetPlayer: 0
+  potionType: 0
+  PotionValue: 0
+  prefab: {fileID: 7394978921394666334, guid: 2bad9c1a96b7aed4aa5822aa0fdf0439, type: 3}
+  effectParticle: {fileID: 0}
+  sprite: {fileID: 21300000, guid: c58ee827f02163343904fde1d6553fee, type: 3}

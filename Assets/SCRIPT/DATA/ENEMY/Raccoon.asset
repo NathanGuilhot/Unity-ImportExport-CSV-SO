@@ -16,5 +16,7 @@ MonoBehaviour:
   name: Raccoon
   PV: 10
   Attack: 5
-  loot: {fileID: 0}
+  loot:
+  - {fileID: 11400000, guid: 5c0e1610cba075d43a433e807d0e16e9, type: 2}
+  inventory: []
   prefab: {fileID: 3296753388263008884, guid: 1ed2d2c0a8924fe478f16f98b7ef40ba, type: 3}

@@ -6,33 +6,20 @@ public class EnemySpawner : MonoBehaviour
 {
     [SerializeField]
     EnemySO[] Enemies;
-    public GameObject ActiveEnemy;
 
-    private void OnEnable()
-    {
-        GameEvent.OnEncounter += SpawnMonster;
-    }
-    private void OnDisable()
-    {
-        GameEvent.OnEncounter -= SpawnMonster;
-    }
+    private EnemyStat _activeEnemy;
 
-    private void Update()
-    {
-        if (ActiveEnemy==null)
-        {
-
-        }
-    }
+    private void OnEnable() => GameEvent.OnEncounter += SpawnMonster;
+    private void OnDisable() => GameEvent.OnEncounter -= SpawnMonster;
 
     void SpawnMonster()
     {
         if (Enemies.Length > 0)
         {
             EnemySO RandomEnemy = Enemies[Random.Range(0, Enemies.Length)];
-            ActiveEnemy = Instantiate(RandomEnemy.prefab) as GameObject;
-            ActiveEnemy.GetComponent<EnemyStat>().Init(RandomEnemy);
-            ActiveEnemy.GetComponent<EnemyStat>().OnDestroyed = OnMonsterDestroy;
+            GameObject foo = Instantiate(RandomEnemy.prefab, transform);
+           _activeEnemy = foo.GetComponent<EnemyStat>();
+            _activeEnemy.Init(RandomEnemy, OnMonsterDestroy);
         }
     }
 
