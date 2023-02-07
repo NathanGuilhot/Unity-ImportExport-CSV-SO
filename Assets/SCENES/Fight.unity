@@ -499,10 +499,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Enemies:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 7b4f5a973601eec4180623858cfbbfaa, type: 2}
+  - {fileID: 11400000, guid: f067e097398fd7a4e8e4c3069d1ee872, type: 2}
+  - {fileID: 11400000, guid: eac79a93689bf7244b6eca3b034f967f, type: 2}
   - {fileID: 11400000, guid: aa3b0c8227478a647945158555f6ab9d, type: 2}
+  - {fileID: 11400000, guid: 41b7cff70b8fbf240afe29d4543d9a67, type: 2}
 --- !u!1001 &4790660909666115199
 PrefabInstance:
   m_ObjectHideFlags: 0
