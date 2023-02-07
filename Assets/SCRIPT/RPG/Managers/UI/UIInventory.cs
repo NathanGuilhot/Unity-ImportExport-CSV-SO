@@ -1,6 +1,7 @@
 using System.Collections;
-using System.Collections.Generic;
+//using System.Collections.Generic;
 using UnityEngine;
+using NightenUtils;
 
 public class UIInventory : MonoBehaviour
 {
@@ -29,7 +30,7 @@ public class UIInventory : MonoBehaviour
         {
             InventorySlot InventoryItem = Instantiate<InventorySlot>(_InventoryLayoutSlot, _InventoryLayout.transform);
             
-            if (!pInventory[i].Equals(default(KeyValuePair<ItemSO, int>))) //Check if a value has been initialized
+            if (pInventory[i].Key != null) //Check if a value has been initialized
             {
                 InventoryItem.SetHeldObject(pInventory[i].Key);
                 InventoryItem.SetSprite(pInventory[i].Key.sprite);

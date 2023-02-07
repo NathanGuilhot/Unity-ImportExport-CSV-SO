@@ -13,7 +13,7 @@ public class PotionHeal : MonoBehaviour, IPotionEffect
 
     public void Init(ItemSO pPotion, IPotionTarget pTarget)
     {
-        _healAmount = pPotion.PotionValue;
+        _healAmount = pPotion.damage;
         
         _target = pTarget;
         _target.Heal(_healAmount);

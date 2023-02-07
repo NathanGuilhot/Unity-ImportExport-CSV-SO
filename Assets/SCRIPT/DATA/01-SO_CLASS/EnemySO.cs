@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class EnemySO : ScriptableObject, IDataObject
@@ -14,7 +16,8 @@ public class EnemySO : ScriptableObject, IDataObject
     [SerializeField] public new string name;
     [SerializeField] public int PV;
     [SerializeField] public int Attack;
-    [SerializeField] public ItemSO loot;
+    [SerializeField] public ItemSO[] loot;
+    [SerializeField] public ItemSO[] inventory;
     [SerializeField] public GameObject prefab;
 
     const string ITEMSO_FOLDER = "ITEMS";
@@ -42,7 +45,24 @@ public class EnemySO : ScriptableObject, IDataObject
         Debug.Log(pData["loot"]);
         if (pData["loot"] != string.Empty)
         {
-            this.loot = SOFileManagement.GetSOWithId<ItemSO>(int.Parse(pData["loot"]), ITEMSO_FOLDER);
+            string[] loot_array = pData["loot"].Split(",");
+            List<ItemSO> loot_list = new List<ItemSO>();
+            foreach (string loot_id in loot_array)
+            {
+                loot_list.Add(SOFileManagement.GetSOWithId<ItemSO>(int.Parse(loot_id), ITEMSO_FOLDER));
+            }
+            this.loot = loot_list.ToArray();
+        }
+
+        if (pData["inventory"] != string.Empty)
+        {
+            string[] item_array = pData["inventory"].Split(",");
+            List<ItemSO> item_list = new List<ItemSO>();
+            foreach (string item_id in item_array)
+            {
+                item_list.Add(SOFileManagement.GetSOWithId<ItemSO>(int.Parse(item_id), ITEMSO_FOLDER));
+            }
+            this.inventory = item_list.ToArray();
         }
 
         this.prefab = SOFileManagement.LoadAssetFromFile<GameObject>(PREFAB_PATH, pData["prefab_name"]+".prefab");
@@ -60,7 +80,13 @@ public class EnemySO : ScriptableObject, IDataObject
         SOData["name_en"] = this.name;
         SOData["PV"] = this.PV.ToString();
         SOData["Attack"] = this.Attack.ToString();
-        SOData["loot"] = this.loot != null ? this.loot.id.ToString() : "";
+
+        if (this.loot != null)
+            SOData["loot"] = String.Join(",", this.loot.Select(item => item.id.ToString()));
+        if (this.inventory != null)
+            SOData["inventory"] = String.Join(",", this.inventory.Select(item => item.id.ToString()));
+
+        //this.loot != null ? this.loot.id.ToString() : "";
         SOData["prefab_name"] = this.prefab != null ? this.prefab.name : "";
 
         return SOData;

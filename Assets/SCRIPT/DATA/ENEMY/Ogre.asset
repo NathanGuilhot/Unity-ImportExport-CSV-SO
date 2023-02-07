@@ -16,5 +16,7 @@ MonoBehaviour:
   name: Ogre
   PV: 60
   Attack: 20
-  loot: {fileID: 11400000, guid: 73aca48465186734f91cb0c748669826, type: 2}
+  loot:
+  - {fileID: 11400000, guid: 73aca48465186734f91cb0c748669826, type: 2}
+  inventory: []
   prefab: {fileID: 3296753388263008884, guid: c82162a37f9c5b24f83d6b01b869abe7, type: 3}

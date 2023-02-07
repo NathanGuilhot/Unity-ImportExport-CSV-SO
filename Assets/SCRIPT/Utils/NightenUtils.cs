@@ -17,4 +17,36 @@ namespace NightenUtils
 
         }
     }
+
+    [System.Serializable]
+    public class KeyValuePair<TKey, TValue>
+    {
+        public KeyValuePair()
+        {
+        }
+
+        public KeyValuePair(TKey key, TValue value)
+        {
+            Key = key;
+            Value = value;
+        }
+
+        [field: SerializeField] public TKey Key { get; set; }
+        [field: SerializeField] public TValue Value { get; set; }
+    }
+
+    //Extension for the Random
+    static class _Random
+    {
+        public static T[] Shuffle<T>(T[] pArray)
+        {
+            T[] shuffledArray = pArray.Clone() as T[];
+            for (int i = 0; i < shuffledArray.Length; i++)
+            {
+                int r = UnityEngine.Random.Range(i, shuffledArray.Length);
+                (shuffledArray[i], shuffledArray[r]) = (shuffledArray[r], shuffledArray[i]);
+            }
+            return pArray;
+        }
+    }
 }

@@ -1,11 +1,13 @@
 using System.Collections;
-using System.Collections.Generic;
+//using System.Collections.Generic;
 using UnityEngine;
+using NightenUtils;
+using System.Linq;
 
 public class PlayerInventory : MonoBehaviour, IInventory
 {
     public const int INVENTORYSLOTSNUMBER = 6;
-    KeyValuePair<ItemSO, int>[] _InventoryData = new KeyValuePair<ItemSO, int>[INVENTORYSLOTSNUMBER];
+    [SerializeField] KeyValuePair<ItemSO, int>[] _InventoryData = new KeyValuePair<ItemSO, int>[INVENTORYSLOTSNUMBER];
 
     [SerializeField] ItemSO[] StartingInventory;
 
@@ -95,6 +97,20 @@ public class PlayerInventory : MonoBehaviour, IInventory
     }
 
     bool IsInventorySlotEmpty(int pSlot) {
-        return _InventoryData[pSlot].Equals(default(KeyValuePair<ItemSO, int>));
+        return (_InventoryData[pSlot].Key == null);
+        //return _InventoryData[pSlot].Equals(default(KeyValuePair<ItemSO, int>));
+    }
+
+    public (bool, KeyValuePair<ItemSO, int>) GetRandomElement()
+    {
+        int[] RandomRange = _Random.Shuffle<int>(Enumerable.Range(0, _InventoryData.Length).ToArray());
+        for (int i=0; i < RandomRange.Length; i++)
+        {
+            if (!IsInventorySlotEmpty(i))
+            {
+                return (true, _InventoryData[i]); //Success
+            }
+        }
+        return (false, new KeyValuePair<ItemSO, int>()); //Fail :( 
     }
 }

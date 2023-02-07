@@ -37,7 +37,8 @@ public class ItemSO : ScriptableObject, IDataObject
         heal,
         love,
         enrage,
-        pacifier
+        pacifier,
+        poison,
     }
 
     static Dictionary<string, PotionType> _potionNameMap =
@@ -47,6 +48,7 @@ public class ItemSO : ScriptableObject, IDataObject
         {"love", PotionType.love },
         {"enrage", PotionType.enrage },
         {"pacifier", PotionType.pacifier },
+        {"poison", PotionType.poison},
     };
     static Dictionary<PotionType, string> _potionTypeMap =
         _potionNameMap.ToDictionary((i) => i.Value, (i) => i.Key);

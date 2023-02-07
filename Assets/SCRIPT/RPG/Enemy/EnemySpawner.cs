@@ -17,7 +17,8 @@ public class EnemySpawner : MonoBehaviour
         if (Enemies.Length > 0)
         {
             EnemySO RandomEnemy = Enemies[Random.Range(0, Enemies.Length)];
-            _activeEnemy = Instantiate(RandomEnemy.prefab, transform).GetComponent<EnemyStat>();
+            GameObject foo = Instantiate(RandomEnemy.prefab, transform);
+           _activeEnemy = foo.GetComponent<EnemyStat>();
             _activeEnemy.Init(RandomEnemy, OnMonsterDestroy);
         }
     }

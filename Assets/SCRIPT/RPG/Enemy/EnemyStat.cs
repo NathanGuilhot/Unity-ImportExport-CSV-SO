@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using NightenUtils;
 using static NightenUtils.ChainDel;
 
 /// Dependencies:
@@ -15,7 +16,9 @@ public class EnemyStat : MonoBehaviour, IPotionTarget
     [field: SerializeField] int PV;
     int PV_Max;
     [field: SerializeField] int Attack;
-    [SerializeField] ItemSO _loot;
+    [SerializeField] ItemSO[] _loot;
+
+    EnemyInventory _inventory;
     public GAMESTATE ActiveState { get; } = GAMESTATE.ENEMY_TURN;
 
     [SerializeField] LifeBar _lifeBar;
@@ -56,6 +59,12 @@ public class EnemyStat : MonoBehaviour, IPotionTarget
         PV = pData.PV;
         Attack = pData.Attack;
         _loot = pData.loot;
+
+        if (pData.inventory.Length > 0)
+        {
+            _inventory = gameObject.AddComponent<EnemyInventory>();
+            _inventory.Init(pData.inventory);
+        }
 
         _OnDestroyed = pOnDestroyed;
     }
@@ -104,7 +113,42 @@ public class EnemyStat : MonoBehaviour, IPotionTarget
     {
         inAction = true;
         Debug.Log("Enemy's turn!");
-        StartCoroutine(OnAttack());
+
+        bool useInventoryItem = false;
+        if (_inventory != null)
+        {
+            if (_inventory.GetInventoryCount() >= 0)
+            {
+                NightenUtils.KeyValuePair<ItemSO, int> RandomItem;
+                (useInventoryItem, RandomItem) = _inventory.GetRandomElement();
+
+                if (useInventoryItem)
+                    StartCoroutine(UseItem(RandomItem.Key));
+            }
+        }
+
+        if (!useInventoryItem)
+            StartCoroutine(OnAttack());
+        
+    }
+
+    private IEnumerator UseItem(ItemSO pItem)
+    {
+        yield return new WaitForSeconds(0.5f);
+        GameEvent.NotificationEvent($"{name} use {pItem.name}");
+        _anim.Play("EnemyThrow 0");
+        yield return new WaitForSeconds(0.5f);
+        GameEvent.ThrowPotionEvent(pItem, true);
+        PerformOnAttack?.Invoke();
+
+        yield return new WaitForSeconds(0.5f);
+        _inventory.RemoveItem(pItem);
+
+        if (isAlive)
+        {
+            yield return new WaitForSeconds(0.3f);
+            OnAttackEnded();
+        }
     }
 
     private IEnumerator OnAttack()
@@ -139,12 +183,17 @@ public class EnemyStat : MonoBehaviour, IPotionTarget
         GameManager.TurnEnded();
     }
 
-    void ItemDrop(ItemSO pLoot)
+    void ItemDrop(ItemSO[] pLoot)
     {
-        bool success = GameManager.Inventory.AddItem(pLoot);
-        GameObject LootDropped = Instantiate(pLoot.prefab);
-        LootDropped.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
-        LootDropped.AddComponent<AnimationAutoDestroy>();
+        bool success = true;
+        foreach (ItemSO loot in pLoot)
+        {
+            success = success ? GameManager.Inventory.AddItem(loot) : false;
+            GameObject LootDropped = Instantiate(loot.prefab);
+            LootDropped.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+            LootDropped.AddComponent<AnimationAutoDestroy>();
+        }
+
         if (!success)
         {
             GameEvent.NotificationEvent("Inventory is full!");

@@ -16,5 +16,7 @@ MonoBehaviour:
   name: Goblin
   PV: 30
   Attack: 15
-  loot: {fileID: 11400000, guid: 7bde6f1e0c4a5474f8f49402510135a7, type: 2}
+  loot:
+  - {fileID: 11400000, guid: 7bde6f1e0c4a5474f8f49402510135a7, type: 2}
+  inventory: []
   prefab: {fileID: 1628951152996457704, guid: 0e39cf24b1d30974caafc2ffd84cd989, type: 3}

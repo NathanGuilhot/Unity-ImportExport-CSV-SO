@@ -19,9 +19,9 @@ MonoBehaviour:
   price: 150
   canEquip: 0
   canUse: 1
-  damage: 0
+  damage: 20
   isPotion: 1
-  targetPlayer: 1
+  targetPlayer: 0
   potionType: 2
   PotionValue: 2
   prefab: {fileID: 647251642628640293, guid: 0997673039f3caf44b2656140d4fc3d4, type: 3}

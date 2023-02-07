@@ -14,6 +14,7 @@ public class _PotionEffect : MonoBehaviour
             {ItemSO.PotionType.love, typeof(PotionLove)},
             {ItemSO.PotionType.enrage, typeof(PotionEnrage)},
             {ItemSO.PotionType.pacifier, typeof(PotionPacifier)},
+            {ItemSO.PotionType.poison, typeof(PotionPoison)},
         };
 
         IPotionEffect Potion = (IPotionEffect)pTarget.gameObject.AddComponent(

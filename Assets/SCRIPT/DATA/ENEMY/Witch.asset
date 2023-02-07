@@ -10,13 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 748e61ab8fe203f41928b090be98cd25, type: 3}
-  m_Name: Slime
+  m_Name: Witch
   m_EditorClassIdentifier: 
   <id>k__BackingField: 3
-  name: Slime
-  PV: 20
+  name: Witch
+  PV: 40
   Attack: 10
   loot:
-  - {fileID: 11400000, guid: 39b263bc89f70c544a16e72e4a8952c8, type: 2}
-  inventory: []
-  prefab: {fileID: 3296753388263008884, guid: b1e1713c48bef224a80e1463472c2168, type: 3}
+  - {fileID: 11400000, guid: cc1cab3d2cc6186409701f1b6ba7ff15, type: 2}
+  inventory:
+  - {fileID: 11400000, guid: cc1cab3d2cc6186409701f1b6ba7ff15, type: 2}
+  - {fileID: 11400000, guid: cc1cab3d2cc6186409701f1b6ba7ff15, type: 2}
+  prefab: {fileID: 3296753388263008884, guid: 14a8116648c20ba4fa1f8f1bf8cd33c0, type: 3}
