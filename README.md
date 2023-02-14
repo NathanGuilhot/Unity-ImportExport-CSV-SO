@@ -4,6 +4,11 @@ This editor script provide an way to generate multiple ScriptableObject from a C
 
 This script allows the fast iteration of ScriptableObject, while not requiring for designers to manage and install Unity. This can really benefit heavy data games like RPGs, deckbuilders or Roguelike.
 
+```
+This repo also include a turn based combat system that serve as a use case for this script: managing game elements such as items and enemies both through CSV and the Unity editor
+```
+![Turn based combat demo](combat_demo.mp4)
+
 - The two editor script you're gonna need to edit are the [CSVItemImport](Assets/Editor/CSVItemImport.cs) and the [CSVItemExport](Assets/Editor/CSVItemExport.cs). There, you'll be able to list the SciptableObject you want to import/export.
 - The configuration for the CSV and ScriptableObject location is in the [CSV](Assets/SCRIPT/UTILS/CSV.cs) class
 - The static class [CSV](Assets/SCRIPT/UTILS/CSV.cs) contain the parser to go back and forth between a CSV file and a list of dictionnaries that will be used by the ScriptableObjects
