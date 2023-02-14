@@ -5,7 +5,8 @@ This editor script provide an way to generate multiple ScriptableObject from a C
 This script allows the fast iteration of ScriptableObject, while not requiring for designers to manage and install Unity. This can really benefit heavy data games like RPGs, deckbuilders or Roguelike.
 
 ```
-This repo also include a turn based combat system that serve as a use case for this script: managing game elements such as items and enemies both through CSV and the Unity editor
+This repo also include a turn based combat system that serve as an use case for this script:
+managing game elements such as items and enemies both through CSV and the Unity editor
 ```
 ![Turn based combat demo](combat_demo.gif)
 
