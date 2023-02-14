@@ -7,7 +7,7 @@ This script allows the fast iteration of ScriptableObject, while not requiring f
 ```
 This repo also include a turn based combat system that serve as a use case for this script: managing game elements such as items and enemies both through CSV and the Unity editor
 ```
-![Turn based combat demo](combat_demo.mp4)
+![Turn based combat demo](combat_demo.gif)
 
 - The two editor script you're gonna need to edit are the [CSVItemImport](Assets/Editor/CSVItemImport.cs) and the [CSVItemExport](Assets/Editor/CSVItemExport.cs). There, you'll be able to list the SciptableObject you want to import/export.
 - The configuration for the CSV and ScriptableObject location is in the [CSV](Assets/SCRIPT/UTILS/CSV.cs) class
